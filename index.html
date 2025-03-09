@@ -1,15 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maximally Advanced Website by Varun Prasath</title>
-  <meta name="description" content="An ultra-advanced static website with dynamic features, vibrant colors, animations, and more." />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultra AI-Enhanced Website by Varun Prasath</title>
+  <meta name="description" content="An ultra-advanced static website with AI features, dynamic interactions, vibrant colors, and more.">
+  <!-- Link to external CSS if needed -->
+  <style>
+    :root {
+      --primary-color: #ff5733;
+      --secondary-color: #33c1ff;
+      --accent-color: #ff33c1;
+      --vibrant-bg: #e1ff33;
+      --text-color: #333;
+      --dark-text-color: #ecf0f1;
+      --border-radius: 10px;
+      --transition-speed: 0.5s;
+      --shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--vibrant-bg);
+      color: var(--text-color);
+      overflow-x: hidden;
+      animation: fadeIn 2s ease-out;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+    header {
+      background-color: var(--primary-color);
+      padding: 1rem;
+      color: white;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+    }
+    nav li {
+      margin: 0 1rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: background-color var(--transition-speed);
+    }
+    nav a:hover {
+      background-color: var(--accent-color);
+    }
+    section {
+      padding: 4rem 2rem;
+      min-height: 80vh;
+      position: relative;
+    }
+    .hero {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+      animation: gradientFlow 10s infinite;
+    }
+    footer {
+      background-color: #2c3e50;
+      color: var(--dark-text-color);
+      padding: 1rem;
+      text-align: center;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* Containers for advanced features */
+    .chatbot-container, .voice-container, .smart-suggestions, .image-recognition, .analytics, .dynamic-content, .quiz, .threejs-container, .sentiment, .recommendation, .ml-simulation {
+      margin: 2rem auto;
+      padding: 1rem;
+      border: 2px solid var(--accent-color);
+      border-radius: var(--border-radius);
+      max-width: 800px;
+      background: white;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Maximally Advanced Website</h1>
+    <h1>Ultra AI-Enhanced Website</h1>
     <nav>
       <ul>
         <li><a href="#home">Home</a></li>
@@ -17,25 +108,21 @@
         <li><a href="#projects">Projects</a></li>
       </ul>
     </nav>
-    <button id="theme-toggle">Toggle Theme</button>
   </header>
-
+  
   <main>
     <section id="home" class="hero">
-      <h2>Welcome to My Ultra-Advanced Website!</h2>
-      <p>
-        If you win the love, you win the life. If you lose the love, you win the world.<br />
-        - William Shakespeare
-      </p>
+      <h2>Welcome to My Ultra-Advanced AI-Enhanced Website!</h2>
+      <p>If you win the love, you win the life. If you lose the love, you win the world.<br> - William Shakespeare</p>
+      <!-- Button to trigger voice command -->
+      <button onclick="startVoiceCommand()">🎤 Voice Command</button>
     </section>
-
+    
     <section id="about">
       <h2>About</h2>
-      <p>
-        <strong>This website is created by Varun Prasath, a 15-year-old student genius and an ultra legend.</strong>
-      </p>
+      <p><strong>This website is created by Varun Prasath, a 15-year-old student genius and an ultra legend.</strong></p>
     </section>
-
+    
     <section id="projects">
       <h2>Projects</h2>
       <div class="projects">
@@ -44,12 +131,236 @@
         <div>Project 3 (Coming Soon)</div>
       </div>
     </section>
+    
+    <!-- Advanced Features Sections -->
+    <section class="chatbot-container" id="chatbotSection">
+      <h2>Chatbot Assistant</h2>
+      <div id="chatbot">
+        <div id="chatbot-messages"></div>
+        <input type="text" id="chatbot-input" placeholder="Type your message here">
+        <button onclick="sendChat()">Send</button>
+      </div>
+    </section>
+    
+    <section class="voice-container" id="voiceSection">
+      <h2>Voice Interaction</h2>
+      <button onclick="startVoiceCommand()">Start Voice Command</button>
+      <button onclick="speakText('This is a sample text read out loud!')">Text-to-Speech</button>
+      <p id="voiceOutput"></p>
+    </section>
+    
+    <section class="smart-suggestions" id="smartSuggestions">
+      <h2>Smart Suggestions & Predictive Text</h2>
+      <input type="text" id="suggestInput" placeholder="Start typing...">
+      <div id="suggestions"></div>
+    </section>
+    
+    <section class="image-recognition" id="imageRecog">
+      <h2>Image Recognition Simulation</h2>
+      <input type="file" id="imageUpload" accept="image/*">
+      <p id="imageResult">Upload an image to simulate recognition.</p>
+    </section>
+    
+    <section class="analytics" id="analyticsSection">
+      <h2>User Behavior Analysis (Simulated)</h2>
+      <p id="userBehavior">Simulated analytics will appear here.</p>
+    </section>
+    
+    <section class="dynamic-content" id="dynamicContent">
+      <h2>Dynamic Content Generation</h2>
+      <button onclick="generateDynamicContent()">Generate Content</button>
+      <div id="dynamicOutput"></div>
+    </section>
+    
+    <section class="quiz" id="quizSection">
+      <h2>Gamification: Quiz</h2>
+      <p id="quizQuestion">What is 2+2?</p>
+      <input type="text" id="quizAnswer" placeholder="Your answer">
+      <button onclick="checkQuizAnswer()">Submit</button>
+      <p id="quizFeedback"></p>
+    </section>
+    
+    <section class="threejs-container" id="threejsSection">
+      <h2>Interactive 3D Element</h2>
+      <div id="threejsCanvas" style="width:100%; height:400px;"></div>
+    </section>
+    
+    <section class="sentiment" id="sentimentSection">
+      <h2>Sentiment Analysis Simulation</h2>
+      <textarea id="sentimentInput" placeholder="Enter text..."></textarea>
+      <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+      <p id="sentimentOutput"></p>
+    </section>
+    
+    <section class="recommendation" id="recommendationSection">
+      <h2>Recommendation System Simulation</h2>
+      <button onclick="generateRecommendations()">Get Recommendations</button>
+      <div id="recommendations"></div>
+    </section>
+    
+    <section class="ml-simulation" id="mlSection">
+      <h2>Simulated Machine Learning Experience</h2>
+      <button onclick="simulateML()">Run Simulation</button>
+      <p id="mlOutput"></p>
+    </section>
+    
   </main>
-
+  
   <footer>
     <p>&copy; 2025 My Website. All Rights Reserved.</p>
-    <p>More features coming soon!</p>
+    <p>More AI features coming soon!</p>
   </footer>
-  <script src="script.js"></script>
+  
+  <!-- Scripts for Advanced Features -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // **************************************
+    // Part 2: Contextual Chatbot with Memory
+    // **************************************
+    let chatMemory = []; // Simple memory simulation
+    function sendChat() {
+      const input = document.getElementById('chatbot-input');
+      const messagesDiv = document.getElementById('chatbot-messages');
+      const userMsg = input.value.trim();
+      if (userMsg === '') return;
+      
+      // Add user message to memory and display it
+      chatMemory.push({ sender: 'You', text: userMsg });
+      messagesDiv.innerHTML += `<p><strong>You:</strong> ${userMsg}</p>`;
+      
+      // Simulate contextual response (improved with memory context)
+      let context = chatMemory.slice(-3).map(m => m.text).join(' | ');
+      let response = `AI (context: ${context.slice(0, 20)}...): I'm processing your message.`;
+      chatMemory.push({ sender: 'AI', text: response });
+      messagesDiv.innerHTML += `<p><strong>AI:</strong> ${response}</p>`;
+      input.value = '';
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+    
+    // **************************************
+    // Part 3: Voice Interaction (Speech Recognition & TTS)
+    // **************************************
+    function startVoiceCommand() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.onresult = function(event) {
+        const voiceText = event.results[0][0].transcript;
+        document.getElementById('voiceOutput').innerText = "You said: " + voiceText;
+      };
+      recognition.start();
+    }
+    
+    function speakText(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    }
+    
+    // **************************************
+    // Part 4: Smart Suggestions / Predictive Text
+    // **************************************
+    const suggestionData = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape"];
+    document.getElementById('suggestInput').addEventListener('input', function() {
+      const query = this.value.toLowerCase();
+      const suggestions = suggestionData.filter(item => item.startsWith(query));
+      document.getElementById('suggestions').innerHTML = suggestions.join(', ');
+    });
+    
+    // **************************************
+    // Part 5: Image Recognition Simulation
+    // **************************************
+    document.getElementById('imageUpload').addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        // Simulation: Pretend we recognized the image
+        document.getElementById('imageResult').innerText = `Simulated recognition: This looks like a photo of something awesome!`;
+      }
+    });
+    
+    // **************************************
+    // Part 6: User Behavior Analysis (Simulated Analytics)
+    // **************************************
+    function simulateUserBehavior() {
+      // Simulated analytic data (e.g., time on page, clicks)
+      const behavior = `You have spent ${Math.floor(Math.random()*100)} seconds on this page.`;
+      document.getElementById('userBehavior').innerText = behavior;
+    }
+    // Run simulation every 10 seconds
+    setInterval(simulateUserBehavior, 10000);
+    
+    // **************************************
+    // Part 7: Dynamic Content Generation
+    // **************************************
+    function generateDynamicContent() {
+      const content = `Dynamic Content generated at ${new Date().toLocaleTimeString()}. Enjoy the advanced features!`;
+      document.getElementById('dynamicOutput').innerText = content;
+    }
+    
+    // **************************************
+    // Part 8: Gamification Element (Simple Quiz)
+    // **************************************
+    function checkQuizAnswer() {
+      const answer = document.getElementById('quizAnswer').value.trim();
+      const feedback = document.getElementById('quizFeedback');
+      if (answer === "4") {
+        feedback.innerText = "Correct! You're a genius.";
+      } else {
+        feedback.innerText = "Incorrect. Try again!";
+      }
+    }
+    
+    // **************************************
+    // Part 9: Interactive 3D Element (Three.js Placeholder)
+    // **************************************
+    // Basic Three.js scene setup (a rotating cube)
+    let scene = new THREE.Scene();
+    let camera = new THREE.PerspectiveCamera(75, document.getElementById('threejsCanvas').clientWidth / 400, 0.1, 1000);
+    let renderer = new THREE.WebGLRenderer();
+    renderer.setSize(document.getElementById('threejsCanvas').clientWidth, 400);
+    document.getElementById('threejsCanvas').appendChild(renderer.domElement);
+    let geometry = new THREE.BoxGeometry();
+    let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    let cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+    camera.position.z = 5;
+    function animate3D() {
+      requestAnimationFrame(animate3D);
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate3D();
+    
+    // **************************************
+    // Part 10: Sentiment Analysis Simulation
+    // **************************************
+    function analyzeSentiment() {
+      const text = document.getElementById('sentimentInput').value;
+      // A simple simulation: count positive words (e.g., "good", "great")
+      let score = 0;
+      const positiveWords = ["good", "great", "awesome", "fantastic", "happy"];
+      positiveWords.forEach(word => {
+        if (text.toLowerCase().includes(word)) score++;
+      });
+      let sentiment = score > 1 ? "Positive" : "Neutral/Negative";
+      document.getElementById('sentimentOutput').innerText = `Sentiment: ${sentiment}`;
+    }
+    
+    // **************************************
+    // Part 11: Recommendation System Simulation
+    // **************************************
+    function generateRecommendations() {
+      const recs = ["Check out Project 1", "You might like Project 2", "Have you seen our latest features?"];
+      document.getElementById('recommendations').innerText = recs.join(' | ');
+    }
+    
+    // **************************************
+    // Part 12: Simulated Machine Learning Experience
+    // **************************************
+    function simulateML() {
+      // Simulate an ML process that 'learns' from user data (dummy simulation)
+      const simulation = `Machine Learning Simulation: Model accuracy improved to ${Math.floor(Math.random()*100)}% after training on user data.`;
+      document.getElementById('mlOutput').innerText = simulation;
+    }
+    
+  </script>
 </body>
-</html>
+        </html>

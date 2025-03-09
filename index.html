@@ -364,3 +364,694 @@
   </script>
 </body>
         </html>
+<!-- Chatbot Assistant Section -->
+<section class="chatbot-container" id="chatbotSection">
+  <h2>Chatbot Assistant</h2>
+  <div id="chatbot">
+    <div id="chatbot-messages" style="height:200px; overflow-y:auto; border:1px solid #ccc; padding:10px;"></div>
+    <input type="text" id="chatbot-input" placeholder="Type your message here">
+    <button onclick="sendChat()">Send</button>
+  </div>
+</section>
+
+<script>
+  // Memory to store conversation history
+  let chatMemory = [];
+  
+  // Function to send a chat message and generate a simulated AI response
+  function sendChat() {
+    const input = document.getElementById('chatbot-input');
+    const messagesDiv = document.getElementById('chatbot-messages');
+    const userMsg = input.value.trim();
+    if (userMsg === '') return;
+    
+    // Append user's message to the chat memory and display it
+    chatMemory.push({ sender: 'You', text: userMsg });
+    messagesDiv.innerHTML += `<p><strong>You:</strong> ${userMsg}</p>`;
+    
+    // Create a simulated AI response based on recent context (last 3 messages)
+    let context = chatMemory.slice(-3).map(m => m.text).join(' | ');
+    let response = `AI (context: ${context.slice(0, 20)}...): I'm processing your message.`;
+    chatMemory.push({ sender: 'AI', text: response });
+    messagesDiv.innerHTML += `<p><strong>AI:</strong> ${response}</p>`;
+    
+    input.value = '';
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+</script>
+<!-- Voice Interaction Section -->
+<section class="voice-container" id="voiceSection">
+  <h2>Voice Interaction</h2>
+  <button onclick="startVoiceCommand()">Start Voice Command</button>
+  <button onclick="speakText('This is a sample text read out loud!')">Text-to-Speech</button>
+  <p id="voiceOutput">Your voice command output will appear here.</p>
+</section>
+
+<script>
+  // Function to start speech recognition
+  function startVoiceCommand() {
+    // Check for browser support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Sorry, your browser does not support Speech Recognition.");
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.onresult = function(event) {
+      const voiceText = event.results[0][0].transcript;
+      document.getElementById('voiceOutput').innerText = "You said: " + voiceText;
+    };
+    recognition.start();
+  }
+  
+  // Function to perform text-to-speech
+  function speakText(text) {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    } else {
+      alert("Sorry, your browser does not support Text-to-Speech.");
+    }
+  }
+</script>
+<!-- Smart Suggestions & Predictive Text Section -->
+<section class="smart-suggestions-container" id="smartSuggestionsSection">
+  <h2>Smart Suggestions & Predictive Text</h2>
+  <input type="text" id="predictiveInput" placeholder="Start typing..." oninput="showSuggestions()">
+  <ul id="suggestionList" style="list-style:none; padding:0;"></ul>
+</section>
+
+<script>
+  // Example suggestion data (can be expanded for more advanced behavior)
+  const suggestionData = [
+    "Hello", "How are you?", "Help", "HTML", "CSS", "JavaScript", "AI Features", 
+    "Advanced Web Development", "Project Ideas", "Contact Us", "Welcome", "Website"
+  ];
+  
+  // Function to display predictive suggestions
+  function showSuggestions() {
+    const input = document.getElementById('predictiveInput').value.toLowerCase();
+    const suggestions = suggestionData.filter(item => item.toLowerCase().includes(input));
+    
+    const suggestionList = document.getElementById('suggestionList');
+    suggestionList.innerHTML = '';
+    
+    suggestions.forEach(suggestion => {
+      const li = document.createElement('li');
+      li.textContent = suggestion;
+      li.style.cursor = 'pointer';
+      li.onclick = () => {
+        document.getElementById('predictiveInput').value = suggestion;
+        suggestionList.innerHTML = '';
+      };
+      suggestionList.appendChild(li);
+    });
+  }
+</script>
+<!-- Image Recognition Simulation Section -->
+<section class="image-recognition-container" id="imageRecognitionSection">
+  <h2>Image Recognition Simulation</h2>
+  <input type="file" id="imageInput" accept="image/*" onchange="simulateImageRecognition()">
+  <p id="imageResult">Upload an image to see the simulated recognition result.</p>
+</section>
+
+<script>
+  // Function to simulate image recognition
+  function simulateImageRecognition() {
+    const imageInput = document.getElementById('imageInput');
+    const imageResult = document.getElementById('imageResult');
+    
+    if (imageInput.files && imageInput.files[0]) {
+      const fileName = imageInput.files[0].name.toLowerCase();
+      
+      // Simulated recognition based on file name keywords
+      if (fileName.includes('cat')) {
+        imageResult.innerText = "Simulated AI: This looks like a cat!";
+      } else if (fileName.includes('dog')) {
+        imageResult.innerText = "Simulated AI: This might be a dog!";
+      } else if (fileName.includes('car')) {
+        imageResult.innerText = "Simulated AI: This image seems to be a car!";
+      } else {
+        imageResult.innerText = "Simulated AI: Unable to recognize the image.";
+      }
+    } else {
+      imageResult.innerText = "Please upload an image.";
+    }
+  }
+</script>
+<!-- User Behavior Analysis Section -->
+<section class="analytics-container" id="analyticsSection">
+  <h2>User Behavior Analysis (Simulated)</h2>
+  <p id="userBehavior">Loading user analytics...</p>
+</section>
+
+<script>
+  // Function to simulate user behavior analytics
+  function simulateUserBehavior() {
+    // Simulated analytic data
+    const secondsSpent = Math.floor(Math.random() * 100) + 1;
+    const clicks = Math.floor(Math.random() * 20);
+    const analyticData = `You have spent ${secondsSpent} seconds on this page and clicked ${clicks} times.`;
+    
+    document.getElementById('userBehavior').innerText = analyticData;
+  }
+  
+  // Update simulated analytics every 10 seconds
+  setInterval(simulateUserBehavior, 10000);
+  
+  // Initial analytics update
+  simulateUserBehavior();
+</script>
+<!-- Dynamic Content Generation Section -->
+<section class="dynamic-content-container" id="dynamicContentSection">
+  <h2>Dynamic Content Generation</h2>
+  <input type="text" id="dynamicInput" placeholder="Type something..." oninput="generateDynamicContent()">
+  <div id="dynamicOutput">Dynamic content will appear here.</div>
+</section>
+
+<script>
+  // Function to generate dynamic content based on user input
+  function generateDynamicContent() {
+    const inputText = document.getElementById('dynamicInput').value;
+    const outputDiv = document.getElementById('dynamicOutput');
+    
+    if (inputText.trim()) {
+      // Simulating dynamic content generation
+      outputDiv.innerHTML = `<p>You typed: <strong>${inputText}</strong></p>` +
+        `<p>Here's a random fact: ${getRandomFact()}</p>`;
+    } else {
+      outputDiv.innerHTML = 'Dynamic content will appear here.';
+    }
+  }
+
+  // Function to provide random dynamic content (simulated AI)
+  function getRandomFact() {
+    const facts = [
+      "The Eiffel Tower can be 15 cm taller during the summer.",
+      "Honey never spoils. Archaeologists found 3000-year-old honey in ancient tombs!",
+      "Bananas are berries, but strawberries aren't.",
+      "A day on Venus is longer than its year.",
+      "Octopuses have three hearts."
+    ];
+    return facts[Math.floor(Math.random() * facts.length)];
+  }
+</script>
+<!-- Gamification: Quiz Game Section -->
+<section class="quiz-container" id="quizSection">
+  <h2>Test Your Knowledge: Quiz Game</h2>
+  <p id="quizQuestion">Click "Start Quiz" to begin!</p>
+  <button onclick="startQuiz()">Start Quiz</button>
+  <div id="quizOptions"></div>
+  <p id="quizResult"></p>
+</section>
+
+<script>
+  // Quiz questions and answers
+  const quizData = [
+    {
+      question: "What is the capital of France?",
+      options: ["Paris", "London", "Rome", "Berlin"],
+      answer: "Paris"
+    },
+    {
+      question: "Which planet is known as the Red Planet?",
+      options: ["Earth", "Mars", "Jupiter", "Saturn"],
+      answer: "Mars"
+    },
+    {
+      question: "Who wrote 'Hamlet'?",
+      options: ["William Shakespeare", "J.K. Rowling", "Mark Twain", "Ernest Hemingway"],
+      answer: "William Shakespeare"
+    }
+  ];
+  
+  let currentQuestionIndex = 0;
+  let score = 0;
+  
+  // Function to start the quiz
+  function startQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    showQuestion();
+  }
+  
+  // Function to display a quiz question
+  function showQuestion() {
+    const questionData = quizData[currentQuestionIndex];
+    document.getElementById('quizQuestion').innerText = questionData.question;
+    
+    const optionsContainer = document.getElementById('quizOptions');
+    optionsContainer.innerHTML = '';
+    
+    questionData.options.forEach(option => {
+      const button = document.createElement('button');
+      button.innerText = option;
+      button.onclick = () => checkAnswer(option);
+      optionsContainer.appendChild(button);
+    });
+  }
+  
+  // Function to check the answer
+  function checkAnswer(selectedOption) {
+    const correctAnswer = quizData[currentQuestionIndex].answer;
+    if (selectedOption === correctAnswer) {
+      score++;
+      document.getElementById('quizResult').innerText = "Correct!";
+    } else {
+      document.getElementById('quizResult').innerText = "Wrong! The correct answer was: " + correctAnswer;
+    }
+    
+    currentQuestionIndex++;
+    if (currentQuestionIndex < quizData.length) {
+      setTimeout(showQuestion, 1000);
+    } else {
+      setTimeout(showScore, 1000);
+    }
+  }
+  
+  // Function to show the final score
+  function showScore() {
+    document.getElementById('quizQuestion').innerText = `Quiz Over! You scored ${score} out of ${quizData.length}.`;
+    document.getElementById('quizOptions').innerHTML = '';
+    document.getElementById('quizResult').innerText = '';
+  }
+</script>
+<!-- Interactive 3D Elements Section -->
+<section class="three-d-container" id="threeDSection">
+  <h2>Interactive 3D Cube</h2>
+  <div class="cube-container">
+    <div class="cube">
+      <div class="face front">Front</div>
+      <div class="face back">Back</div>
+      <div class="face left">Left</div>
+      <div class="face right">Right</div>
+      <div class="face top">Top</div>
+      <div class="face bottom">Bottom</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* 3D Cube Styles */
+  .cube-container {
+    perspective: 1000px;
+    margin: 50px auto;
+    width: 200px;
+    height: 200px;
+  }
+
+  .cube {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: rotateCube 10s infinite linear;
+  }
+
+  .face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: var(--accent-color);
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+    opacity: 0.9;
+    border-radius: var(--border-radius);
+  }
+
+  .front { transform: translateZ(100px); background: #ff5733; }
+  .back { transform: rotateY(180deg) translateZ(100px); background: #33c1ff; }
+  .left { transform: rotateY(-90deg) translateZ(100px); background: #ff33c1; }
+  .right { transform: rotateY(90deg) translateZ(100px); background: #2ecc71; }
+  .top { transform: rotateX(90deg) translateZ(100px); background: #9b59b6; }
+  .bottom { transform: rotateX(-90deg) translateZ(100px); background: #f39c12; }
+
+  @keyframes rotateCube {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    25% { transform: rotateX(90deg) rotateY(0deg); }
+    50% { transform: rotateX(90deg) rotateY(90deg); }
+    75% { transform: rotateX(180deg) rotateY(90deg); }
+    100% { transform: rotateX(180deg) rotateY(180deg); }
+  }
+</style>
+<!-- Sentiment Analysis Section -->
+<section class="sentiment-analysis-container" id="sentimentAnalysisSection">
+  <h2>Sentiment Analysis Simulation</h2>
+  <input type="text" id="sentimentInput" placeholder="Enter your thoughts..." oninput="analyzeSentiment()">
+  <p id="sentimentResult">Sentiment analysis result will appear here.</p>
+</section>
+
+<script>
+  // Function to simulate sentiment analysis
+  function analyzeSentiment() {
+    const inputText = document.getElementById('sentimentInput').value;
+    const resultElement = document.getElementById('sentimentResult');
+    
+    if (!inputText.trim()) {
+      resultElement.innerText = 'Sentiment analysis result will appear here.';
+      return;
+    }
+    
+    // Simple sentiment analysis simulation using keywords
+    const positiveWords = ['love', 'great', 'awesome', 'fantastic', 'happy', 'excellent'];
+    const negativeWords = ['bad', 'sad', 'terrible', 'awful', 'hate', 'poor'];
+    
+    let sentimentScore = 0;
+    
+    inputText.toLowerCase().split(' ').forEach(word => {
+      if (positiveWords.includes(word)) sentimentScore++;
+      if (negativeWords.includes(word)) sentimentScore--;
+    });
+    
+    // Determine sentiment based on score
+    if (sentimentScore > 0) {
+      resultElement.innerText = 'Positive Sentiment! 😊';
+      resultElement.style.color = 'green';
+    } else if (sentimentScore < 0) {
+      resultElement.innerText = 'Negative Sentiment! 😢';
+      resultElement.style.color = 'red';
+    } else {
+      resultElement.innerText = 'Neutral Sentiment 😐';
+      resultElement.style.color = 'gray';
+    }
+  }
+</script>
+<!-- Recommendation System Section -->
+<section class="recommendation-container" id="recommendationSection">
+  <h2>AI-Like Recommendation System</h2>
+  <input type="text" id="recommendationInput" placeholder="What are you interested in?" oninput="generateRecommendations()">
+  <p>Recommended for you:</p>
+  <ul id="recommendationList"></ul>
+</section>
+
+<script>
+  // Sample recommendation data
+  const recommendationData = {
+    technology: ["Latest Gadgets", "AI Tools", "Web Development Tutorials"],
+    sports: ["Football Highlights", "Cricket Updates", "Tennis Strategies"],
+    movies: ["Top Movies of 2025", "Trending Series", "Upcoming Releases"],
+    music: ["Popular Songs", "New Albums", "Live Concerts"],
+    education: ["Online Courses", "Study Tips", "Educational Videos"],
+    travel: ["Best Destinations", "Travel Tips", "Affordable Stays"]
+  };
+
+  // Function to generate recommendations based on user input
+  function generateRecommendations() {
+    const input = document.getElementById('recommendationInput').value.toLowerCase();
+    const listElement = document.getElementById('recommendationList');
+    listElement.innerHTML = '';
+
+    if (!input.trim()) return;
+
+    // Find matching categories and display suggestions
+    for (const category in recommendationData) {
+      if (category.includes(input)) {
+        recommendationData[category].forEach(item => {
+          const listItem = document.createElement('li');
+          listItem.textContent = item;
+          listElement.appendChild(listItem);
+        });
+      }
+    }
+  }
+</script>
+<!-- Simulated Machine Learning Section -->
+<section class="machine-learning-container" id="machineLearningSection">
+  <h2>Simulated Machine Learning Experience</h2>
+  <p>Click on the circles to "train" the model and see the changes in data distribution!</p>
+  <div id="dataVisualization"></div>
+</section>
+
+<script>
+  // Create a simulated data visualization
+  const dataVisualization = document.getElementById('dataVisualization');
+  
+  // Generate random data points
+  function generateDataPoints() {
+    dataVisualization.innerHTML = '';
+    for (let i = 0; i < 50; i++) {
+      const circle = document.createElement('div');
+      circle.className = 'data-point';
+      circle.style.left = Math.random() * 90 + '%';
+      circle.style.top = Math.random() * 90 + '%';
+      circle.style.backgroundColor = '#33c1ff';
+      circle.onclick = () => trainModel(circle);
+      dataVisualization.appendChild(circle);
+    }
+  }
+
+  // Simulated "training" effect
+  function trainModel(circle) {
+    circle.style.backgroundColor = '#ff33c1';
+    circle.style.transform = 'scale(1.5)';
+    setTimeout(() => {
+      circle.style.transform = 'scale(1)';
+    }, 500);
+  }
+
+  // Initialize the data visualization
+  generateDataPoints();
+</script>
+
+<style>
+  /* Styles for the simulated machine learning section */
+  #dataVisualization {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-color: #f0f0f0;
+    border: 2px solid #333;
+    margin: 20px 0;
+    overflow: hidden;
+  }
+
+  .data-point {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transition: transform 0.3s, background-color 0.3s;
+    cursor: pointer;
+  }
+</style>
+<!-- Voice Interaction Section -->
+<section class="voice-interaction-container" id="voiceInteractionSection">
+  <h2>Voice Interaction Feature</h2>
+  <p>Click the button and speak to interact with the website!</p>
+  <button onclick="startVoiceRecognition()">🎤 Start Voice Interaction</button>
+  <p id="voiceResult">Your voice command will appear here.</p>
+</section>
+
+<script>
+  // Voice Recognition Setup
+  const voiceResult = document.getElementById('voiceResult');
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = 'en-US';
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  // Start voice recognition
+  function startVoiceRecognition() {
+    recognition.start();
+  }
+
+  // Handle voice input
+  recognition.onresult = function(event) {
+    const transcript = event.results[0][0].transcript.toLowerCase();
+    voiceResult.innerText = `You said: "${transcript}"`;
+    handleVoiceCommand(transcript);
+  };
+
+  // Handle specific voice commands
+  function handleVoiceCommand(command) {
+    if (command.includes('home')) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (command.includes('about')) {
+      document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+    } else if (command.includes('projects')) {
+      document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+    } else {
+      voiceResult.innerText += " (Command not recognized)";
+    }
+  };
+
+  recognition.onerror = function(event) {
+    voiceResult.innerText = 'Voice recognition error. Please try again.';
+  };
+</script>
+<!-- User Behavior Analysis Section -->
+<section class="user-behavior-container" id="userBehaviorSection">
+    <h2>User Behavior Analysis Simulation</h2>
+    <p>Explore the website and see your behavior analysis below:</p>
+    <div id="behaviorAnalysisResult">Your behavior data will appear here.</div>
+</section>
+
+<script>
+    // Variables to store user behavior data
+    let clickCount = 0;
+    let scrollDepth = 0;
+    let activeTime = 0;
+    let activityTimer;
+
+    // Start tracking active time
+    function startTracking() {
+        activityTimer = setInterval(() => {
+            activeTime++;
+            updateBehaviorAnalysis();
+        }, 1000);
+    }
+
+    // Stop tracking active time
+    function stopTracking() {
+        clearInterval(activityTimer);
+    }
+
+    // Track clicks
+    document.addEventListener('click', () => {
+        clickCount++;
+        updateBehaviorAnalysis();
+    });
+
+    // Track scroll depth
+    document.addEventListener('scroll', () => {
+        const scrolled = window.scrollY + window.innerHeight;
+        const totalHeight = document.body.scrollHeight;
+        const depth = Math.floor((scrolled / totalHeight) * 100);
+        if (depth > scrollDepth) {
+            scrollDepth = depth;
+            updateBehaviorAnalysis();
+        }
+    });
+
+    // Update the behavior analysis display
+    function updateBehaviorAnalysis() {
+        const result = document.getElementById('behaviorAnalysisResult');
+        result.innerHTML = `
+            <p>Click Count: ${clickCount}</p>
+            <p>Scroll Depth: ${scrollDepth}%</p>
+            <p>Active Time: ${activeTime} seconds</p>
+        `;
+    }
+
+    // Start tracking when the page is active
+    window.addEventListener('focus', startTracking);
+    window.addEventListener('blur', stopTracking);
+</script>
+<!-- Gamification Elements Section -->
+<section class="gamification-container" id="gamificationSection">
+    <h2>Gamification & Rewards</h2>
+    <p>Earn points by interacting with the website! Unlock badges as you progress.</p>
+    <button onclick="earnPoints()">Click to Earn Points</button>
+    <div id="pointsDisplay">Points: 0</div>
+    <div id="badgesContainer"></div>
+</section>
+
+<script>
+    let points = 0;
+    const pointsDisplay = document.getElementById('pointsDisplay');
+    const badgesContainer = document.getElementById('badgesContainer');
+
+    const badges = [
+        { pointsNeeded: 10, name: "Beginner Badge", color: "#33c1ff" },
+        { pointsNeeded: 25, name: "Explorer Badge", color: "#ff5733" },
+        { pointsNeeded: 50, name: "Achiever Badge", color: "#ff33c1" },
+        { pointsNeeded: 100, name: "Legend Badge", color: "#2c3e50" }
+    ];
+
+    function earnPoints() {
+        points += Math.floor(Math.random() * 10) + 1;
+        pointsDisplay.textContent = `Points: ${points}`;
+        checkForBadges();
+    }
+
+    function checkForBadges() {
+        badgesContainer.innerHTML = '';
+        badges.forEach(badge => {
+            if (points >= badge.pointsNeeded) {
+                const badgeElement = document.createElement('div');
+                badgeElement.className = 'badge';
+                badgeElement.style.backgroundColor = badge.color;
+                badgeElement.textContent = badge.name;
+                badgesContainer.appendChild(badgeElement);
+            }
+        });
+    }
+</script>
+
+<style>
+    /* Styles for Gamification Elements */
+    #pointsDisplay {
+        font-size: 1.5rem;
+        margin: 10px 0;
+    }
+    .badge {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        color: white;
+        border-radius: 10px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1s ease-out;
+    }
+</style>
+<!-- Interactive 3D Elements Section -->
+<section class="interactive-3d-container" id="interactive3DSection">
+    <h2>Interactive 3D Element</h2>
+    <p>Experience the power of 3D interactivity! Below is a 3D cube you can rotate.</p>
+    <div id="3dContainer"></div>
+</section>
+
+<!-- Include Three.js Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+    // 3D Scene Setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    
+    const container = document.getElementById('3dContainer');
+    container.style.width = '100%';
+    container.style.height = '400px';
+    renderer.setSize(window.innerWidth, 400);
+    container.appendChild(renderer.domElement);
+
+    // Create a rotating cube
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: 0xff33c1, wireframe: true });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    camera.position.z = 5;
+
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        renderer.setSize(window.innerWidth, 400);
+        camera.aspect = window.innerWidth / 400;
+        camera.updateProjectionMatrix();
+    });
+</script>
+
+<style>
+    /* Styles for 3D Section */
+    #3dContainer {
+        border: 2px solid var(--primary-color);
+        border-radius: var(--border-radius);
+        margin-top: 20px;
+        overflow: hidden;
+    }
+      </style>

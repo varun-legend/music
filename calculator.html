@@ -15,6 +15,7 @@
             height: 100vh;
             background-color: #282c34;
             color: white;
+            flex-direction: column;
         }
         .calculator {
             width: 350px;
@@ -58,6 +59,24 @@
             width: 100%;
             height: 200px;
         }
+        .dark-mode-toggle {
+            margin-top: 10px;
+            padding: 10px;
+            cursor: pointer;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .history {
+            width: 350px;
+            margin-top: 20px;
+            padding: 10px;
+            background: #555;
+            border-radius: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
@@ -89,22 +108,31 @@
             <button onclick="calculateResult()">=</button>
             <button onclick="plotGraph()">📈</button>
 
-            <button onclick="appendToDisplay('Math.sin(')">sin</button>
-            <button onclick="appendToDisplay('Math.cos(')">cos</button>
-            <button onclick="appendToDisplay('Math.tan(')">tan</button>
-            <button onclick="appendToDisplay('Math.sqrt(')">√</button>
+            <button onclick="appendToDisplay('sin(')">sin</button>
+            <button onclick="appendToDisplay('cos(')">cos</button>
+            <button onclick="appendToDisplay('tan(')">tan</button>
+            <button onclick="appendToDisplay('sqrt(')">√</button>
 
-            <button onclick="appendToDisplay('Math.log(')">log</button>
-            <button onclick="appendToDisplay('Math.exp(')">e^x</button>
-            <button onclick="appendToDisplay('Math.pow(')">x^y</button>
-            <button onclick="appendToDisplay('Math.PI')">π</button>
+            <button onclick="appendToDisplay('log(')">log</button>
+            <button onclick="appendToDisplay('exp(')">e^x</button>
+            <button onclick="appendToDisplay('^')">x^y</button>
+            <button onclick="appendToDisplay('π')">π</button>
 
-            <button onclick="appendToDisplay('Math.E')">e</button>
-            <button onclick="appendToDisplay('factorial(')">x!</button>
+            <button onclick="appendToDisplay('e')">e</button>
+            <button onclick="appendToDisplay('!')">x!</button>
             <button onclick="appendToDisplay('(')">(</button>
             <button onclick="appendToDisplay(')')">)</button>
+
+            <button onclick="appendToDisplay('x')">x</button>
         </div>
         <canvas id="graphCanvas" class="graph-container"></canvas>
+    </div>
+    
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+
+    <div class="history">
+        <h3>History</h3>
+        <ul id="historyList"></ul>
     </div>
 
     <script>
@@ -124,32 +152,41 @@
         function calculateResult() {
             let display = document.getElementById("display");
             try {
-                display.value = math.evaluate(display.value);
+                let expression = display.value.replace(/\^/g, "**").replace(/π/g, "math.pi").replace(/e/g, "math.e");
+
+                expression = expression.replace(/(\d+)!/g, (_, num) => `math.factorial(${num})`);
+                
+                let result = math.evaluate(expression);
+                addToHistory(display.value, result);
+                display.value = result;
             } catch {
                 display.value = "Error";
             }
         }
 
-        function factorial(n) {
-            return (n === 0 || n === 1) ? 1 : n * factorial(n - 1);
-        }
-
         function plotGraph() {
-            let display = document.getElementById("display").value;
-            if (!display.includes("x")) {
+            let expression = document.getElementById("display").value;
+
+            if (!expression.includes("x")) {
                 alert("Enter an equation with 'x' to plot a graph (e.g., x^2)");
                 return;
             }
 
+            expression = expression.replace(/\^/g, "**");
+
             let ctx = document.getElementById("graphCanvas").getContext("2d");
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
             let xValues = [];
             let yValues = [];
 
             for (let x = -10; x <= 10; x += 0.5) {
                 try {
-                    let y = math.evaluate(display.replace(/x/g, `(${x})`));
-                    xValues.push(x);
-                    yValues.push(y);
+                    let y = math.evaluate(expression.replace(/x/g, `(${x})`));
+                    if (!isNaN(y) && isFinite(y)) {
+                        xValues.push(x);
+                        yValues.push(y);
+                    }
                 } catch {
                     continue;
                 }
@@ -160,34 +197,25 @@
                 data: {
                     labels: xValues,
                     datasets: [{
-                        label: "Graph",
+                        label: "Graph of " + expression,
                         data: yValues,
                         borderColor: "red",
                         fill: false
                     }]
-                },
-                options: {
-                    responsive: false,
-                    scales: {
-                        x: { title: { display: true, text: "X-Axis" } },
-                        y: { title: { display: true, text: "Y-Axis" } }
-                    }
                 }
             });
         }
 
-        document.addEventListener("keydown", function(event) {
-            let key = event.key;
-            if (/[0-9+\-*/().%]/.test(key)) {
-                appendToDisplay(key);
-            } else if (key === "Enter") {
-                calculateResult();
-            } else if (key === "Backspace") {
-                deleteLast();
-            } else if (key === "Escape") {
-                clearDisplay();
-            }
-        });
+        function addToHistory(expression, result) {
+            let historyList = document.getElementById("historyList");
+            let entry = document.createElement("li");
+            entry.textContent = `${expression} = ${result}`;
+            historyList.appendChild(entry);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("light-mode");
+        }
     </script>
 </body>
 </html>

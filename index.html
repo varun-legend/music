@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maximally Advanced Website by Varun Prasath</title>
+    <meta name="description" content="An ultra-advanced static website with dynamic features, vibrant colors, animations, and more.">
+    <style>
+        :root {
+            --primary-color: #ff5733;
+            --secondary-color: #33c1ff;
+            --accent-color: #ff33c1;
+            --light-bg: #f0f0f0;
+            --dark-bg: #2c3e50;
+            --light-text: #333;
+            --dark-text: #ecf0f1;
+            --border-radius: 10px;
+            --transition-speed: 0.5s;
+            --shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--light-text);
+            overflow-x: hidden;
+            animation: fadeIn 2s ease-out;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            color: white;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            animation: slideDown 1s ease-out;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav li {
+            margin: 0 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            transition: background-color var(--transition-speed);
+        }
+
+        nav a:hover {
+            background-color: var(--accent-color);
+        }
+
+        section {
+            padding: 4rem 2rem;
+            min-height: 80vh;
+            background: var(--light-bg);
+            color: var(--light-text);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        section:nth-of-type(even) {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        h1, h2, p {
+            margin: 1rem 0;
+            animation: fadeIn 1.5s;
+        }
+
+        .hero {
+            background: var(--gradient);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            animation: textPop 2s infinite alternate;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .projects div {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .projects div:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            padding: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Maximally Advanced Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <h2>Welcome to My Ultra-Advanced Website!</h2>
+            <p>If you win the love, you win the life. If you lose the love, you win the world.<br> - William Shakespeare</p>
+        </section>
+
+        <section id="about">
+            <h2>About</h2>
+            <p><strong>This website is created by Varun Prasath, a 15-year-old student genius and an ultra legend.</strong></p>
+        </section>
+
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="projects">
+                <div><a href="calculator.html">Project 1 - Scientific Calculator</a></div>
+                <div>Project 2 (Coming Soon)</div>
+                <div>Project 3 (Coming Soon)</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Website. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

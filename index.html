@@ -3,10 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ultra Advanced Music Player</title>
-  <meta name="description" content="A futuristic, ultra-advanced music player with dynamic visualizations, advanced controls, and drag-and-drop playlist." />
+  <title>Ultra Advanced Music Website by Varun Prasath</title>
+  <meta name="description" content="A futuristic, ultra-advanced music website with vibrant colors, multi-layered animations, and an advanced music player." />
+  <meta name="author" content="Varun Prasath" />
+  <!-- Open Graph Metadata -->
+  <meta property="og:title" content="Ultra Advanced Music Website by Varun Prasath" />
+  <meta property="og:description" content="A futuristic music website with vibrant colors, animations, and an advanced music player." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://varun1210163.github.io/music" />
+  <meta property="og:image" content="https://varun1210163.github.io/music/preview.jpg" />
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#FF2D95" />
+  
   <style>
-    /* Root Variables for Vibrant Colors and Futuristic Vibe */
+    /* Root Variables for Vibrant Colors and Futuristic Feel */
     :root {
       --primary-color: #FF2D95;
       --secondary-color: #2DFEFF;
@@ -18,62 +29,88 @@
       --transition-speed: 0.3s;
       --shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
     }
-
+    
+    /* Global Styles */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
+    
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: var(--bg-dark);
       color: var(--text-light);
+      line-height: 1.6;
       overflow-x: hidden;
     }
-
+    
     header {
       background: var(--primary-color);
       padding: 1rem;
-      text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
       box-shadow: var(--shadow);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 1000;
     }
-
-    .hero {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      background-size: 200% 200%;
-      animation: gradientFlow 8s ease infinite;
+    
+    /* Navigation */
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color var(--transition-speed);
+    }
+    
+    nav a:hover {
+      color: var(--accent-color);
+    }
+    
+    /* Section Styles */
+    section {
       padding: 3rem 1rem;
       text-align: center;
-      position: relative;
     }
-
+    
+    #home {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      background-size: 200% 200%;
+      animation: gradientFlow 10s ease infinite;
+    }
+    
     @keyframes gradientFlow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
-    .container {
-      max-width: 1000px;
-      margin: 2rem auto;
-      padding: 1rem;
+    
+    #about {
+      background: var(--bg-darker);
     }
-
+    
+    #music {
+      background: var(--bg-darker);
+      padding-bottom: 4rem;
+    }
+    
+    /* Advanced Music Player Styling */
     .music-player {
       background: var(--bg-darker);
       padding: 1.5rem;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
+      max-width: 900px;
+      margin: 2rem auto;
       position: relative;
-      overflow: hidden;
     }
-
+    
     /* Audio Visualizer Canvas */
     #visualizer {
       width: 100%;
@@ -82,20 +119,20 @@
       border-radius: var(--border-radius);
       margin-bottom: 1rem;
     }
-
+    
     /* Playback Controls */
     .controls {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 15px;
       margin: 1rem 0;
     }
     
     .controls button {
       background: var(--secondary-color);
       border: none;
-      padding: 0.5rem 1rem;
+      padding: 0.7rem 1.2rem;
       border-radius: var(--border-radius);
       cursor: pointer;
       transition: background var(--transition-speed);
@@ -111,8 +148,9 @@
       background: #333;
       border-radius: var(--border-radius);
       cursor: pointer;
-      margin: 1rem 0;
+      margin: 1rem auto;
       height: 10px;
+      width: 90%;
       position: relative;
     }
     
@@ -122,6 +160,11 @@
       width: 0%;
       border-radius: var(--border-radius);
       transition: width 0.1s;
+    }
+    
+    #time-display {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
     }
     
     /* Volume Control */
@@ -141,20 +184,17 @@
     .playlist {
       list-style: none;
       margin-top: 1rem;
+      padding: 0;
     }
     
     .playlist li {
       background: var(--secondary-color);
       color: black;
-      padding: 0.75rem;
+      padding: 0.8rem;
       margin: 0.5rem 0;
       border-radius: var(--border-radius);
       cursor: pointer;
       transition: background var(--transition-speed);
-    }
-    
-    .playlist li.dragging {
-      opacity: 0.5;
     }
     
     .playlist li:hover {
@@ -166,25 +206,42 @@
       color: var(--text-light);
     }
     
+    /* Footer */
     footer {
-      text-align: center;
-      padding: 1rem;
       background: var(--bg-darker);
-      margin-top: 2rem;
+      padding: 1rem;
       box-shadow: var(--shadow);
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <header>Ultra Advanced Music Player</header>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#home" title="Home">Home</a></li>
+        <li><a href="#about" title="About">About</a></li>
+        <li><a href="#music" title="Music">Music</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <section class="hero">
+  <!-- Home Section -->
+  <section id="home">
     <h2>Welcome to the Future of Music</h2>
-    <p>Experience ultra-smooth playback, advanced controls, and vibrant visuals.</p>
+    <p>Experience vibrant colors, dynamic animations, and an ultra-advanced music player.</p>
   </section>
 
-  <div class="container">
+  <!-- About Section -->
+  <section id="about">
+    <h2>About</h2>
+    <p>This website is created by Varun Prasath, a 15-year-old visionary, blending art and technology to bring you an immersive music experience.</p>
+  </section>
+
+  <!-- Music Section -->
+  <section id="music">
+    <h2>Music Player</h2>
     <div class="music-player">
       <!-- Audio Visualizer -->
       <canvas id="visualizer"></canvas>
@@ -222,10 +279,10 @@
         <li data-src="https://varun1210163.github.io/music/song2.mp3">Link2</li>
       </ul>
     </div>
-  </div>
+  </section>
 
   <footer>
-    &copy; 2025 Ultra Advanced Music Player. All Rights Reserved.
+    <p>&copy; 2025 Ultra Advanced Music Website. All Rights Reserved.</p>
   </footer>
 
   <script>
@@ -239,13 +296,12 @@
     const progress = document.getElementById('progress');
     const timeDisplay = document.getElementById('time-display');
     const volumeSlider = document.getElementById('volume');
-    const playlist = document.getElementById('playlist');
+    const playlistItems = document.querySelectorAll('.playlist li');
     let currentSongIndex = 0;
 
-    // List of songs from playlist items
-    const songs = Array.from(document.querySelectorAll('.playlist li'));
+    // Create an array of songs from playlist items
+    const songs = Array.from(playlistItems);
 
-    // Play a song by index
     function playSong(index) {
       const selectedSong = songs[index];
       audioPlayer.src = selectedSong.getAttribute('data-src');
@@ -257,10 +313,10 @@
     }
 
     function updateNowPlaying(text) {
-      document.querySelector('.music-player h2').textContent = `Now Playing: ${text}`;
+      document.querySelector('#music h2').textContent = `Now Playing: ${text}`;
     }
 
-    // Play/Pause Handlers
+    // Playback Controls
     playButton.addEventListener('click', () => {
       if (!audioPlayer.src) {
         playSong(currentSongIndex);
@@ -273,7 +329,6 @@
       audioPlayer.pause();
     });
 
-    // Next/Previous Handlers
     nextButton.addEventListener('click', () => {
       currentSongIndex = (currentSongIndex + 1) % songs.length;
       playSong(currentSongIndex);
@@ -284,19 +339,18 @@
       playSong(currentSongIndex);
     });
 
-    // Update Progress Bar
+    // Update Progress Bar & Time Display
     audioPlayer.addEventListener('timeupdate', () => {
       const { duration, currentTime } = audioPlayer;
       if (duration) {
         const progressPercent = (currentTime / duration) * 100;
         progress.style.width = progressPercent + '%';
 
-        // Update time display
-        const currentMinutes = Math.floor(currentTime / 60);
-        const currentSeconds = Math.floor(currentTime % 60).toString().padStart(2, '0');
-        const durationMinutes = Math.floor(duration / 60);
-        const durationSeconds = Math.floor(duration % 60).toString().padStart(2, '0');
-        timeDisplay.textContent = `${currentMinutes}:${currentSeconds} / ${durationMinutes}:${durationSeconds}`;
+        const curMins = Math.floor(currentTime / 60);
+        const curSecs = Math.floor(currentTime % 60).toString().padStart(2, '0');
+        const durMins = Math.floor(duration / 60);
+        const durSecs = Math.floor(duration % 60).toString().padStart(2, '0');
+        timeDisplay.textContent = `${curMins}:${curSecs} / ${durMins}:${durSecs}`;
       }
     });
 
@@ -320,10 +374,9 @@
       nextButton.click();
     });
 
-    // Playlist Click Handler
+    // Playlist Click Handler & Drag & Drop Setup
     songs.forEach((item, index) => {
       item.addEventListener('click', () => playSong(index));
-      // Enable drag and drop reordering
       item.draggable = true;
       item.addEventListener('dragstart', dragStart);
       item.addEventListener('dragover', dragOver);
@@ -331,7 +384,6 @@
       item.addEventListener('dragend', dragEnd);
     });
 
-    // Drag and Drop Functions for Playlist
     let dragSrcEl = null;
     function dragStart(e) {
       dragSrcEl = this;
@@ -339,28 +391,22 @@
       e.dataTransfer.setData('text/html', this.innerHTML);
       this.classList.add('dragging');
     }
-
     function dragOver(e) {
       e.preventDefault();
       return false;
     }
-
     function dropItem(e) {
       e.stopPropagation();
       if (dragSrcEl !== this) {
-        // Swap the HTML of the dragged element and the drop target
         let temp = this.innerHTML;
         this.innerHTML = dragSrcEl.innerHTML;
         dragSrcEl.innerHTML = temp;
-
-        // Swap data-src attributes
         let tempSrc = this.getAttribute('data-src');
         this.setAttribute('data-src', dragSrcEl.getAttribute('data-src'));
         dragSrcEl.setAttribute('data-src', tempSrc);
       }
       return false;
     }
-
     function dragEnd(e) {
       this.classList.remove('dragging');
     }
@@ -381,30 +427,21 @@
     function drawVisualizer() {
       requestAnimationFrame(drawVisualizer);
       analyser.getByteFrequencyData(dataArray);
-
-      canvasCtx.fillStyle = var(--bg-dark);
+      canvasCtx.fillStyle = '#000';
       canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-
       const barWidth = (canvas.width / bufferLength) * 2.5;
       let barHeight;
       let x = 0;
-
       for(let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i];
-
-        // Use vibrant neon colors for the bars
         const red = barHeight + (25 * (i/bufferLength));
         const green = 250 * (i/bufferLength);
         const blue = 50;
-
         canvasCtx.fillStyle = `rgb(${red},${green},${blue})`;
         canvasCtx.fillRect(x, canvas.height - barHeight/2, barWidth, barHeight/2);
-
         x += barWidth + 1;
       }
     }
-
-    // Adjust canvas size
     function resizeCanvas() {
       canvas.width = canvas.clientWidth;
       canvas.height = canvas.clientHeight;
@@ -412,7 +449,7 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     drawVisualizer();
-
   </script>
+
 </body>
 </html>

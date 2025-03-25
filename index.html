@@ -1,503 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ultra Advanced Music Website by Varun Prasath</title>
-  <meta name="description" content="A futuristic, ultra-advanced music website with vibrant colors, multi-layered animations, and immersive music streaming features." />
-  <meta name="author" content="Varun Prasath" />
-  <!-- Open Graph Metadata for social sharing -->
-  <meta property="og:title" content="Ultra Advanced Music Website by Varun Prasath" />
-  <meta property="og:description" content="A futuristic, ultra-advanced music website with vibrant colors, multi-layered animations, and immersive music streaming features." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://yourwebsite.example.com" />
-  <meta property="og:image" content="https://yourwebsite.example.com/preview.jpg" />
-  <!-- PWA Meta Tags -->
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#FF2D95" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultra Advanced Music Website</title>
+  <meta name="description" content="A futuristic music streaming website with an interactive playlist.">
+  <meta name="author" content="Varun Prasath">
+  
   <style>
-    /* Root Variables with Ultra-Vibrant Colors */
+    /* Futuristic Design */
     :root {
-      --primary-color: #FF2D95;     /* Vibrant Magenta */
-      --secondary-color: #2DFEFF;   /* Vibrant Cyan */
-      --accent-color: #FFDA2D;      /* Vibrant Yellow */
+      --primary-color: #FF2D95;
+      --secondary-color: #2DFEFF;
+      --accent-color: #FFDA2D;
       --bg-dark: #1a1a1a;
-      --bg-darker: #121212;
       --text-light: #ffffff;
-      --border-radius: 10px;
-      --transition-speed: 0.5s;
-      --shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-      --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     }
-    
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-    
+
     body {
       font-family: Arial, sans-serif;
       background: var(--bg-dark);
       color: var(--text-light);
-      overflow-x: hidden;
-      animation: fadeIn 2s ease-out;
-      line-height: 1.6;
+      text-align: center;
+      margin: 0;
+      padding: 0;
     }
-    
+
     header {
       background: var(--primary-color);
       padding: 1rem;
-      color: var(--text-light);
-      text-align: center;
+      font-size: 1.5rem;
       position: sticky;
       top: 0;
-      z-index: 1100;
-      box-shadow: var(--shadow);
-      animation: slideDown 1s ease-out;
+      z-index: 1000;
     }
-    
-    nav ul {
-      display: flex;
-      justify-content: center;
-      list-style: none;
-    }
-    
-    nav li {
-      margin: 0 1rem;
-    }
-    
-    nav a {
-      color: var(--text-light);
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      border-radius: var(--border-radius);
-      transition: background-color var(--transition-speed);
-    }
-    
-    nav a:hover {
-      background-color: var(--accent-color);
-    }
-    
-    main {
-      position: relative;
-      z-index: 2;
-    }
-    
-    section {
-      padding: 4rem 2rem;
-      min-height: 80vh;
-      transition: background-color var(--transition-speed), color var(--transition-speed);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    section:nth-of-type(even) {
-      background-color: var(--secondary-color);
-      color: var(--text-light);
-    }
-    
-    h1, h2, h3, p {
-      margin: 1rem 0;
-      animation: fadeIn 1.5s;
-    }
-    
-    /* HERO SECTION WITH MULTI-LAYER EFFECTS */
+
     .hero {
-      background: var(--gradient);
-      background-size: 200% 200%;
-      animation: gradientFlow 12s ease infinite;
-      color: var(--text-light);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      padding-top: 4rem;
-    }
-    
-    /* WebGL Shader Canvas Background */
-    #webgl-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      opacity: 0.6;
-    }
-    
-    /* SVG Overlay: Pulsating Neon Shapes */
-    .svg-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
-    }
-    
-    .svg-overlay svg {
-      position: absolute;
-      fill: none;
-      stroke: var(--accent-color);
-      stroke-width: 2;
-      opacity: 0.7;
-      animation: pulse 4s infinite;
-    }
-    
-    .circle1 { top: 10%; left: 20%; width: 80px; height: 80px; }
-    .circle2 { top: 60%; left: 70%; width: 100px; height: 100px; }
-    .line1 { top: 40%; left: 10%; width: 200px; height: 200px; }
-    
-    @keyframes pulse {
-      0%   { opacity: 0.6; transform: scale(0.95); }
-      50%  { opacity: 1; transform: scale(1.05); }
-      100% { opacity: 0.6; transform: scale(0.95); }
-    }
-    
-    /* Holographic Flicker Text Effect */
-    .holo-text {
-      animation: flicker 3s infinite;
-      text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
-    }
-    
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-      20%, 24%, 55% { opacity: 0.4; }
-    }
-    
-    .hero h2 {
-      font-size: 3rem;
-      margin-bottom: 2rem;
-      animation: textPop 2s infinite alternate;
-    }
-    
-    /* ROTATING CUBE IN HERO */
-    #cube-container {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 2rem;
-      perspective: 600px;
-      position: relative;
-      z-index: 2;
-    }
-    
-    .cube {
-      width: 120px;
-      height: 120px;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: rotateCube 12s infinite linear;
-    }
-    
-    .cube div {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border: 2px solid var(--primary-color);
-      border-radius: var(--border-radius);
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.7);
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 4rem 2rem;
+      color: var(--text-light);
     }
-    
-    .face-front  { transform: translateZ(60px); }
-    .face-back   { transform: rotateY(180deg) translateZ(60px); }
-    .face-right  { transform: rotateY(90deg) translateZ(60px); }
-    .face-left   { transform: rotateY(-90deg) translateZ(60px); }
-    .face-top    { transform: rotateX(90deg) translateZ(60px); }
-    .face-bottom { transform: rotateX(-90deg) translateZ(60px); }
-    
-    /* MUSIC PLAYER STYLING */
+
     .music-player {
-      background: var(--bg-darker);
+      background: #1a1a1a;
       padding: 2rem;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: center;
+      border-radius: 10px;
+      width: 60%;
+      margin: 2rem auto;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
     }
-    .music-player audio {
+
+    audio {
       width: 100%;
       margin-top: 1rem;
     }
+
     .playlist {
       list-style: none;
-      margin: 1rem 0;
       padding: 0;
     }
+
     .playlist li {
-      padding: 0.5rem;
+      padding: 0.75rem;
+      margin: 0.5rem;
+      background: var(--secondary-color);
+      color: black;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background var(--transition-speed);
+      transition: 0.3s;
     }
+
     .playlist li:hover {
       background: var(--accent-color);
     }
-    
-    /* FOOTER */
+
+    .active {
+      background: var(--primary-color) !important;
+      color: white;
+    }
+
     footer {
-      background-color: var(--bg-darker);
-      color: var(--text-light);
+      background: #121212;
       padding: 1rem;
-      text-align: center;
-    }
-    
-    /* KEYFRAMES */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes slideDown {
-      from { transform: translateY(-100%); }
-      to { transform: translateY(0); }
-    }
-    
-    @keyframes gradientFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    
-    @keyframes textPop {
-      from { transform: scale(1); }
-      to { transform: scale(1.1); color: var(--accent-color); }
-    }
-    
-    @keyframes rotateCube {
-      0%   { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-      25%  { transform: rotateX(90deg) rotateY(45deg) rotateZ(15deg); }
-      50%  { transform: rotateX(180deg) rotateY(90deg) rotateZ(30deg); }
-      75%  { transform: rotateX(270deg) rotateY(135deg) rotateZ(45deg); }
-      100% { transform: rotateX(360deg) rotateY(180deg) rotateZ(60deg); }
-    }
-    
-    /* MOBILE OPTIMIZATIONS */
-    @media (max-width: 768px) {
-      .hero h2 { font-size: 2rem; }
-      #cube-container { width: 80px; height: 80px; }
-      .cube, .cube div { width: 80px; height: 80px; }
-      .face-front, .face-back, .face-right, .face-left, .face-top, .face-bottom {
-        transform: translateZ(40px);
-      }
+      margin-top: 2rem;
     }
   </style>
 </head>
 <body>
-  <noscript>
-    <div style="text-align:center; padding:2rem; background:#333; color:#fff;">
-      This website requires JavaScript to run properly.
-    </div>
-  </noscript>
-  
-  <header role="banner">
-    <h1 class="holo-text">Ultra Advanced Music Website</h1>
-    <nav aria-label="Primary Navigation">
-      <ul>
-        <li><a href="#home" title="Home">Home</a></li>
-        <li><a href="#about" title="About">About</a></li>
-        <li><a href="#music" title="Music">Music</a></li>
-      </ul>
-    </nav>
+
+  <header>
+    <h1>Ultra Advanced Music Website</h1>
   </header>
-  
-  <main role="main">
-    <!-- HERO SECTION WITH MULTI-LAYER EFFECTS -->
-    <section id="home" class="hero" aria-label="Hero Section">
-      <!-- WebGL Shader Background -->
-      <canvas id="webgl-canvas"></canvas>
-      <!-- SVG Overlay for Neon Shapes -->
-      <div class="svg-overlay" aria-hidden="true">
-        <svg class="circle1" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="48" />
-        </svg>
-        <svg class="circle2" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="48" />
-        </svg>
-        <svg class="line1" viewBox="0 0 200 200">
-          <line x1="0" y1="0" x2="200" y2="200" />
-        </svg>
-      </div>
-      <!-- Rotating Cube -->
-      <div id="cube-container" aria-label="3D Rotating Cube">
-        <div class="cube">
-          <div class="face-front"></div>
-          <div class="face-back"></div>
-          <div class="face-right"></div>
-          <div class="face-left"></div>
-          <div class="face-top"></div>
-          <div class="face-bottom"></div>
-        </div>
-      </div>
-      <h2 class="holo-text">Welcome to the Music Stream!</h2>
-      <p>Enjoy our curated tracks and feel the vibe.</p>
-    </section>
+
+  <section class="hero">
+    <h2>Welcome to the Future of Music!</h2>
+    <p>Enjoy an advanced music streaming experience.</p>
+  </section>
+
+  <section class="music-player">
+    <h2 id="now-playing">Now Playing: Select a Song</h2>
+    <audio id="audio-player" controls>
+      <source src="" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
     
-    <!-- ABOUT SECTION -->
-    <section id="about" aria-label="About">
-      <h2>About</h2>
-      <p><strong>This music website is created by Varun Prasath, a 15-year-old student genius with a passion for futuristic design and immersive music experiences.</strong></p>
-    </section>
-    
-    <!-- MUSIC SECTION -->
-    <section id="music" aria-label="Music">
-      <h2>Music</h2>
-      <div class="music-player">
-        <h3>Now Playing</h3>
-        <!-- Basic Audio Player -->
-        <audio id="audio-player" controls>
-          <source src="https://example.com/sample-track.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
-        <!-- Playlist -->
-        <ul class="playlist" id="playlist">
-          <li data-src="https://example.com/sample-track.mp3">Track 1 - Sample Music</li>
-          <li data-src="https://example.com/sample-track2.mp3">Track 2 - Next Hit</li>
-          <li data-src="https://example.com/sample-track3.mp3">Track 3 - The Vibe</li>
-        </ul>
-      </div>
-    </section>
-  </main>
-  
-  <footer role="contentinfo">
+    <h3>Playlist</h3>
+    <ul class="playlist" id="playlist">
+      <li data-src="https://varun1210163.github.io/music/song1.mp3">Song 1</li>
+      <li data-src="https://varun1210163.github.io/music/song2.mp3">Song 2</li>
+      <li data-src="https://varun1210163.github.io/music/song3.mp3">Song 3</li>
+    </ul>
+  </section>
+
+  <footer>
     <p>&copy; 2025 Ultra Advanced Music Website. All Rights Reserved.</p>
-    <p>More features coming soon!</p>
   </footer>
-  
-  <!-- Advanced WebGL Shader Script with Performance Enhancements -->
-  <script type="module">
-    (() => {
-      const canvas = document.getElementById('webgl-canvas');
-      const gl = canvas.getContext('webgl');
-      if (!gl) {
-        console.error("WebGL not supported.");
-        canvas.style.display = 'none';
-        return;
-      }
-      
-      // Resize canvas to full screen
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-      }
-      window.addEventListener('resize', resizeCanvas);
-      resizeCanvas();
-      
-      // Vertex Shader Source
-      const vertexSrc = `
-        attribute vec2 a_position;
-        varying vec2 v_uv;
-        void main() {
-          v_uv = a_position * 0.5 + 0.5;
-          gl_Position = vec4(a_position, 0.0, 1.0);
-        }
-      `;
-      
-      // Fragment Shader Source: Animated cosmic effect
-      const fragmentSrc = `
-        precision mediump float;
-        uniform float u_time;
-        uniform vec2 u_resolution;
-        varying vec2 v_uv;
-        void main() {
-          vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / u_resolution.y;
-          float t = u_time * 0.5;
-          float r = length(uv);
-          float a = atan(uv.y, uv.x);
-          float color = 0.5 + 0.5 * cos(t + r * 10.0 + a * 5.0);
-          gl_FragColor = vec4(vec3(color, color * 0.5, 1.0 - color), 1.0);
-        }
-      `;
-      
-      // Helper function to compile shaders
-      function compileShader(src, type) {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, src);
-        gl.compileShader(shader);
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-          console.error("Shader compile error:", gl.getShaderInfoLog(shader));
-          gl.deleteShader(shader);
-          return null;
-        }
-        return shader;
-      }
-      
-      const vertexShader = compileShader(vertexSrc, gl.VERTEX_SHADER);
-      const fragmentShader = compileShader(fragmentSrc, gl.FRAGMENT_SHADER);
-      
-      // Create and link program
-      const program = gl.createProgram();
-      gl.attachShader(program, vertexShader);
-      gl.attachShader(program, fragmentShader);
-      gl.linkProgram(program);
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.error("Program linking failed:", gl.getProgramInfoLog(program));
-        return;
-      }
-      gl.useProgram(program);
-      
-      // Set up a full-screen quad
-      const vertices = new Float32Array([
-        -1, -1,   1, -1,  -1, 1,
-        -1, 1,    1, -1,   1, 1
-      ]);
-      const buffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-      gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-      
-      const a_position = gl.getAttribLocation(program, 'a_position');
-      gl.enableVertexAttribArray(a_position);
-      gl.vertexAttribPointer(a_position, 2, gl.FLOAT, false, 0, 0);
-      
-      const u_time = gl.getUniformLocation(program, 'u_time');
-      const u_resolution = gl.getUniformLocation(program, 'u_resolution');
-      
-      let startTime = performance.now();
-      
-      // Animation Loop using requestAnimationFrame
-      function render() {
-        const currentTime = (performance.now() - startTime) / 1000;
-        gl.uniform1f(u_time, currentTime);
-        gl.uniform2f(u_resolution, canvas.width, canvas.height);
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-        requestAnimationFrame(render);
-      }
-      render();
-    })();
-  </script>
-  
-  <!-- Simple Music Player Script -->
+
   <script>
     const audioPlayer = document.getElementById('audio-player');
-    const playlistItems = document.querySelectorAll('#playlist li');
-    
+    const playlistItems = document.querySelectorAll('.playlist li');
+    const nowPlayingText = document.getElementById('now-playing');
+
     playlistItems.forEach(item => {
       item.addEventListener('click', function() {
-        // Update audio source and play selected track
-        audioPlayer.src = this.getAttribute('data-src');
+        const songSrc = this.getAttribute('data-src');
+        const songName = this.textContent;
+
+        audioPlayer.src = songSrc;
         audioPlayer.play();
-        
-        // Update active class (optional styling)
+
+        nowPlayingText.textContent = `Now Playing: ${songName}`;
+
         playlistItems.forEach(i => i.classList.remove('active'));
         this.classList.add('active');
       });
     });
   </script>
-  
-  <!-- Service Worker Registration for PWA -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(registration => {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, err => {
-          console.log('ServiceWorker registration failed: ', err);
-        });
-      });
-    }
-  </script>
+
 </body>
 </html>

@@ -208,6 +208,7 @@
 
       <!-- Playlist -->
       <h3>Playlist</h3>
+      <input type="text" id="search-box" placeholder="Search for a song..." onkeyup="searchSongs()">
       <ul class="playlist" id="playlist">
         <li data-src="https://varun1210163.github.io/music/song1.mp3">Refreshing music of Doraemon</li>
         <li data-src="https://varun1210163.github.io/music/song2.mp3">Link2</li>
@@ -534,3 +535,18 @@
       font-size: 1rem;
     }
   </style>
+<script>
+  function searchSongs() {
+    let input = document.getElementById("search-box").value.toLowerCase();
+    let songs = document.querySelectorAll(".playlist li");
+
+    songs.forEach(song => {
+      let songName = song.textContent.toLowerCase();
+      if (songName.includes(input)) {
+        song.style.display = "block"; // Show matching songs
+      } else {
+        song.style.display = "none"; // Hide non-matching songs
+      }
+    });
+  }
+</script>

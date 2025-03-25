@@ -192,6 +192,7 @@
         <button id="play">▶️</button>
         <button id="pause">⏸️</button>
         <button id="next">⏭️</button>
+        <button id="loop">🔁 Loop Off</button>
       </div>
 
       <!-- Progress Bar -->
@@ -549,4 +550,14 @@
       }
     });
   }
+</script>
+<script>
+  const loopButton = document.getElementById('loop');
+  let isLooping = false;
+
+  loopButton.addEventListener('click', function () {
+    isLooping = !isLooping;
+    audioPlayer.loop = isLooping;
+    loopButton.textContent = isLooping ? "🔁 Loop On" : "🔁 Loop Off";
+  });
 </script>

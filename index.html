@@ -590,3 +590,47 @@
     item.addEventListener("click", () => playMedia(index));
   });
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const addPlaylistButtons = document.querySelectorAll(".add-playlist");
+    const userPlaylist = document.getElementById("user-playlist");
+
+    // Load user's playlist from local storage
+    let userPlaylistSongs = JSON.parse(localStorage.getItem("userPlaylist")) || [];
+
+    // Function to update the playlist UI
+    function updateUserPlaylist() {
+      userPlaylist.innerHTML = "";
+      userPlaylistSongs.forEach((song, index) => {
+        const li = document.createElement("li");
+        li.textContent = song;
+        
+        // Remove button
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "❌ Remove";
+        removeBtn.onclick = function () {
+          userPlaylistSongs.splice(index, 1);
+          localStorage.setItem("userPlaylist", JSON.stringify(userPlaylistSongs));
+          updateUserPlaylist();
+        };
+
+        li.appendChild(removeBtn);
+        userPlaylist.appendChild(li);
+      });
+    }
+
+    // Add song to the playlist
+    addPlaylistButtons.forEach(button => {
+      button.addEventListener("click", function () {
+        const songName = button.parentElement.textContent.replace("➕ Add", "").trim();
+        if (!userPlaylistSongs.includes(songName)) {
+          userPlaylistSongs.push(songName);
+          localStorage.setItem("userPlaylist", JSON.stringify(userPlaylistSongs));
+          updateUserPlaylist();
+        }
+      });
+    });
+
+    updateUserPlaylist();
+  });
+</script>

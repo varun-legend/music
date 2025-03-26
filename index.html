@@ -634,3 +634,70 @@
     updateUserPlaylist();
   });
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const playlistSelector = document.getElementById("playlist-selector");
+    const playlistNameInput = document.getElementById("playlist-name");
+    const createPlaylistButton = document.getElementById("create-playlist");
+    const userPlaylist = document.getElementById("user-playlist");
+    const currentPlaylistName = document.getElementById("current-playlist-name");
+
+    let playlists = JSON.parse(localStorage.getItem("playlists")) || {};
+
+    // Function to update playlist UI
+    function updatePlaylistUI() {
+      userPlaylist.innerHTML = "";
+      const currentPlaylist = playlistSelector.value;
+      currentPlaylistName.textContent = currentPlaylist || "None";
+
+      if (playlists[currentPlaylist]) {
+        playlists[currentPlaylist].forEach((song, index) => {
+          const li = document.createElement("li");
+          li.textContent = song;
+
+          // Remove Button
+          const removeBtn = document.createElement("button");
+          removeBtn.textContent = "❌ Remove";
+          removeBtn.onclick = function () {
+            playlists[currentPlaylist].splice(index, 1);
+            localStorage.setItem("playlists", JSON.stringify(playlists));
+            updatePlaylistUI();
+          };
+
+          li.appendChild(removeBtn);
+          userPlaylist.appendChild(li);
+        });
+      }
+    }
+
+    // Function to load playlist names into selector
+    function updatePlaylistSelector() {
+      playlistSelector.innerHTML = "";
+      for (const name in playlists) {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        playlistSelector.appendChild(option);
+      }
+      updatePlaylistUI();
+    }
+
+    // Create New Playlist
+    createPlaylistButton.addEventListener("click", function () {
+      const name = playlistNameInput.value.trim();
+      if (name && !playlists[name]) {
+        playlists[name] = [];
+        localStorage.setItem("playlists", JSON.stringify(playlists));
+        playlistNameInput.value = "";
+        updatePlaylistSelector();
+        playlistSelector.value = name;
+        updatePlaylistUI();
+      }
+    });
+
+    // Switch Playlist
+    playlistSelector.addEventListener("change", updatePlaylistUI);
+
+    updatePlaylistSelector();
+  });
+</script>

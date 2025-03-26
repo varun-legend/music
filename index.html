@@ -488,3 +488,69 @@
   </script>
 </body>
 </html>
+<script>
+  let db;
+  const request = indexedDB.open("MusicPlaylists", 1);
+
+  request.onupgradeneeded = function(event) {
+    db = event.target.result;
+    if (!db.objectStoreNames.contains("playlists")) {
+      db.createObjectStore("playlists", { keyPath: "name" });
+    }
+  };
+
+  request.onsuccess = function(event) {
+    db = event.target.result;
+    loadPlaylists();
+  };
+
+  request.onerror = function(event) {
+    console.error("IndexedDB error:", event.target.error);
+  };
+
+  function savePlaylist(name, songs) {
+    const transaction = db.transaction(["playlists"], "readwrite");
+    const store = transaction.objectStore("playlists");
+    store.put({ name, songs });
+  }
+
+  function loadPlaylists() {
+    const transaction = db.transaction(["playlists"], "readonly");
+    const store = transaction.objectStore("playlists");
+    const request = store.getAll();
+
+    request.onsuccess = function(event) {
+      const playlists = event.target.result;
+      playlistSelector.innerHTML = "";
+      playlists.forEach(playlist => {
+        const option = document.createElement("option");
+        option.value = playlist.name;
+        option.textContent = playlist.name;
+        playlistSelector.appendChild(option);
+      });
+      updatePlaylistUI();
+    };
+  }
+
+  function renamePlaylist() {
+    const oldName = playlistSelector.value;
+    const newName = prompt("Enter new playlist name:", oldName);
+    if (!newName || newName === oldName) return;
+
+    const transaction = db.transaction(["playlists"], "readwrite");
+    const store = transaction.objectStore("playlists");
+    const getRequest = store.get(oldName);
+
+    getRequest.onsuccess = function(event) {
+      const playlist = event.target.result;
+      if (playlist) {
+        store.delete(oldName);
+        playlist.name = newName;
+        store.put(playlist);
+        loadPlaylists();
+      }
+    };
+  }
+
+  renamePlaylistButton.addEventListener("click", renamePlaylist);
+</script>

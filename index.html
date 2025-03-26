@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultra Advanced Music Website</title>
+  <meta name="description" content="A futuristic, ultra-advanced music website with vibrant colors, animations, and an advanced music player.">
+  <meta name="author" content="Varun Prasath">
+  <style>
+    /* Vibrant Color Theme */
+    :root {
+      --primary-color: #FF2D95;
+      --secondary-color: #2DFEFF;
+      --accent-color: #FFDA2D;
+      --bg-dark: #1a1a1a;
+      --bg-darker: #121212;
+      --text-light: #ffffff;
+      --border-radius: 8px;
+      --transition-speed: 0.3s;
+      --shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    /* Basic Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      overflow-x: hidden;
+    }
+    header {
+      background: var(--primary-color);
+      padding: 1rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    /* Navigation */
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color var(--transition-speed);
+    }
+    nav a:hover {
+      color: var(--accent-color);
+    }
+  </style>
+  <style>
+    .hero {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      background-size: 200% 200%;
+      animation: gradientFlow 10s ease infinite;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* Rotating Cube Styles */
+    #cube-container {
+      width: 120px;
+      height: 120px;
+      margin: 30px auto;
+      perspective: 600px;
+    }
+    .cube {
+      width: 120px;
+      height: 120px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateCube 10s infinite linear;
+    }
+    .face {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border: 2px solid var(--primary-color);
+      background: var(--secondary-color);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.7);
+    }
+    .front  { transform: translateZ(60px); }
+    .back   { transform: rotateY(180deg) translateZ(60px); }
+    .right  { transform: rotateY(90deg) translateZ(60px); }
+    .left   { transform: rotateY(-90deg) translateZ(60px); }
+    .top    { transform: rotateX(90deg) translateZ(60px); }
+    .bottom { transform: rotateX(-90deg) translateZ(60px); }
+    @keyframes rotateCube {
+      0%   { transform: rotateX(0deg) rotateY(0deg); }
+      50%  { transform: rotateX(180deg) rotateY(180deg); }
+      100% { transform: rotateX(360deg) rotateY(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <a href="#home">Home</a>
+        </li>
+        <li>
+          <a href="#about">About</a>
+        </li>
+        <li>
+          <a href="#music">Music</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <section id="home" class="hero">
+    <h2>Welcome to the Future of Music</h2>
+    <p>Experience vibrant colors, dynamic animations, and an ultra-advanced music player.</p>
+    <div id="cube-container">
+      <div class="cube">
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face right"></div>
+        <div class="face left"></div>
+        <div class="face top"></div>
+        <div class="face bottom"></div>
+      </div>
+    </div>
+  </section>
+  <section id="music">
+    <h2>Music Player</h2>
+    <div class="music-player">
+      <canvas id="visualizer"></canvas><audio id="audio-player"><source src="https://varun1210163.github.io/music/song1.mp3" type="audio/mpeg"> Your browser does not support audio.</audio>
+      <div class="controls">
+        <button id="prev">⏮️</button> <button id="play">▶️</button> <button id="pause">⏸️</button> <button id="next">⏭️</button> <button id="loop">🔁 Loop Off</button>
+      </div>
+      <div class="progress-container" id="progress-container">
+        <div class="progress" id="progress"></div>
+      </div>
+      <div id="time-display">
+        0:00 / 0:00
+      </div>
+      <div class="volume-container">
+        <label for="volume">Volume:</label> <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+      </div>
+      <div class="playlist-container">
+        <h3>Create & Manage Playlists</h3><input type="text" id="playlist-name" placeholder="Enter Playlist Name"> <button id="create-playlist">➕ Create Playlist</button> <select id="playlist-selector">
+        </select>
+      </div>
+      <div class="search-container" style="text-align:center; margin-top:1rem;">
+        <input type="text" id="search-box" oninput="searchSongs()" placeholder="Search Songs..." style="padding: 0.5rem; border-radius: var(--border-radius); border: 1px solid #ccc;">
+      </div>
+      <h3>Available Songs</h3>
+      <ul class="playlist" id="playlist">
+        <li data-src="https://varun1210163.github.io/music/song1.mp3" data-type="audio">Refreshing music of Doraemon <button class="add-playlist">➕ Add</button></li>
+        <li data-src="https://varun1210163.github.io/music/song2.mp3" data-type="audio">Doraemon Explorer Bow Bow BGM <button class="add-playlist">➕ Add</button></li>
+      </ul>
+      <h3>Current Playlist: <span id="current-playlist-name">None</span></h3>
+      <ul class="user-playlist" id="user-playlist"></ul>
+    </div>
+  </section>
+  <h3>Current Playlist: <span id="current-playlist-name">None</span></h3>
+  <ul class="user-playlist" id="user-playlist"></ul>
+  <footer>
+    <p>© 2025 Ultra Advanced Music Website. All Rights Reserved.</p>
+  </footer>
+  <script>
+  const audioPlayer = document.getElementById('audio-player');
+  const playButton = document.getElementById('play');
+  const pauseButton = document.getElementById('pause');
+  const prevButton = document.getElementById('prev');
+  const nextButton = document.getElementById('next');
+  const progress = document.getElementById('progress');
+  const timeDisplay = document.getElementById('time-display');
+  const volumeSlider = document.getElementById('volume');
+
+  let currentSongIndex = 0;
+  // Array of song list items (used for next/prev navigation)
+  const songs = [...document.querySelectorAll('.playlist li')];
+
+  function playSong(index) {
+    // This function is now called from playMedia.
+    const selectedSong = songs[index];
+    audioPlayer.src = selectedSong.getAttribute('data-src');
+    audioPlayer.play();
+    updateNowPlaying(selectedSong.textContent);
+    songs.forEach(item => item.classList.remove('active'));
+    selectedSong.classList.add('active');
+    currentSongIndex = index;
+  }
+
+  function updateNowPlaying(text) {
+    document.querySelector('#music h2').textContent = `Now Playing: ${text}`;
+  }
+
+  playButton.addEventListener('click', () => {
+    if (!audioPlayer.src) playSong(currentSongIndex);
+    else audioPlayer.play();
+  });
+
+  pauseButton.addEventListener('click', () => {
+    audioPlayer.pause();
+  });
+
+  nextButton.addEventListener('click', () => {
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    playSong(currentSongIndex);
+  });
+
+  prevButton.addEventListener('click', () => {
+    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    playSong(currentSongIndex);
+  });
+
+  audioPlayer.addEventListener('timeupdate', () => {
+    const { duration, currentTime } = audioPlayer;
+    if (duration) {
+      const progressPercent = (currentTime / duration) * 100;
+      progress.style.width = progressPercent + '%';
+      const curMins = Math.floor(currentTime / 60);
+      const curSecs = String(Math.floor(currentTime % 60)).padStart(2, '0');
+      const durMins = Math.floor(duration / 60);
+      const durSecs = String(Math.floor(duration % 60)).padStart(2, '0');
+      timeDisplay.textContent = `${curMins}:${curSecs} / ${durMins}:${durSecs}`;
+    }
+  });
+
+  document.getElementById('progress-container').addEventListener('click', (e) => {
+    const width = e.currentTarget.clientWidth;
+    const clickX = e.offsetX;
+    const duration = audioPlayer.duration;
+    if (duration) {
+      audioPlayer.currentTime = (clickX / width) * duration;
+    }
+  });
+
+  volumeSlider.addEventListener('input', () => {
+    audioPlayer.volume = volumeSlider.value;
+  });
+
+  audioPlayer.addEventListener('ended', () => {
+    nextButton.click();
+  });
+  </script> 
+  <script>
+
+
+  // Audio Visualizer using Web Audio API
+  const canvas = document.getElementById('visualizer');
+  const canvasCtx = canvas.getContext('2d');
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+
+  const source = audioCtx.createMediaElementSource(audioPlayer);
+  source.connect(analyser);
+  analyser.connect(audioCtx.destination);
+
+  function drawVisualizer() {
+    requestAnimationFrame(drawVisualizer);
+    // Resize canvas on each frame in case of window change
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+    analyser.getByteFrequencyData(dataArray);
+    canvasCtx.fillStyle = '#000';
+    canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+    const barWidth = (canvas.width / bufferLength) * 2.5;
+    let x = 0;
+    for (let i = 0; i < bufferLength; i++) {
+      const barHeight = dataArray[i];
+      const red = barHeight + (25 * (i / bufferLength));
+      const green = 250 * (i / bufferLength);
+      const blue = 50;
+      canvasCtx.fillStyle = `rgb(${red},${green},${blue})`;
+      canvasCtx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
+      x += barWidth + 1;
+    }
+  }
+
+  drawVisualizer();
+
+  // Resume Audio Context on user interaction
+  document.body.addEventListener('click', () => {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  });
+
+  // Drag and Drop Playlist Reordering
+  let dragSrcEl = null;
+
+  function dragStart(e) {
+    dragSrcEl = this;
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+    this.classList.add('dragging');
+  }
+
+  function dragOver(e) {
+    e.preventDefault();
+    return false;
+  }
+
+  function dropItem(e) {
+    e.stopPropagation();
+    if (dragSrcEl !== this) {
+      // Swap innerHTML
+      const temp = this.innerHTML;
+      this.innerHTML = dragSrcEl.innerHTML;
+      dragSrcEl.innerHTML = temp;
+      // Swap data-src attributes
+      const tempSrc = this.getAttribute('data-src');
+      this.setAttribute('data-src', dragSrcEl.getAttribute('data-src'));
+      dragSrcEl.setAttribute('data-src', tempSrc);
+    }
+    return false;
+  }
+
+  function dragEnd(e) {
+    this.classList.remove('dragging');
+  }
+
+  // Use a different variable name to avoid conflict with the 'songs' array
+  const dragItems = document.querySelectorAll('.playlist li');
+  dragItems.forEach((item) => {
+    item.draggable = true;
+    item.addEventListener('dragstart', dragStart);
+    item.addEventListener('dragover', dragOver);
+    item.addEventListener('drop', dropItem);
+    item.addEventListener('dragend', dragEnd);
+  });
+  </script> 
+  <script>
+
+
+  // Video Player for handling media (audio and video)
+  const videoPlayer = document.createElement("video");
+  videoPlayer.controls = true;
+  videoPlayer.style.width = "100%";
+
+  function playMedia(index) {
+    const selectedItem = document.querySelectorAll('.playlist li')[index];
+    const mediaType = selectedItem.getAttribute('data-type');
+    const mediaSrc = selectedItem.getAttribute('data-src');
+    currentSongIndex = index; // update current song index for next/prev buttons
+    if (mediaType === "audio") {
+      if (document.contains(videoPlayer)) videoPlayer.remove();
+      audioPlayer.src = mediaSrc;
+      audioPlayer.style.display = "block"; 
+      audioPlayer.play();
+    } else if (mediaType === "video") {
+      audioPlayer.pause();
+      audioPlayer.style.display = "none";
+      videoPlayer.src = mediaSrc;
+      document.querySelector('.music-player').appendChild(videoPlayer);
+      videoPlayer.play();
+    }
+  }
+
+  // Attach click event once using playMedia (removes duplicate listener)
+  document.querySelectorAll('.playlist li').forEach((item, index) => {
+    item.addEventListener("click", () => playMedia(index));
+  });
+
+  // Loop button control
+  const loopButton = document.getElementById('loop');
+  let isLooping = false;
+  loopButton.addEventListener('click', function () {
+    isLooping = !isLooping;
+    audioPlayer.loop = isLooping;
+    loopButton.textContent = isLooping ? "🔁 Loop On" : "🔁 Loop Off";
+  });
+
+  // Playlist Manager (User Playlist & Local Storage)
+  document.addEventListener("DOMContentLoaded", function () {
+    const addPlaylistButtons = document.querySelectorAll(".add-playlist");
+    const userPlaylist = document.getElementById("user-playlist");
+    let userPlaylistSongs = JSON.parse(localStorage.getItem("userPlaylist")) || [];
+    
+    function updateUserPlaylist() {
+      userPlaylist.innerHTML = "";
+      userPlaylistSongs.forEach((song, index) => {
+        const li = document.createElement("li");
+        li.textContent = song;
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "❌ Remove";
+        removeBtn.onclick = function () {
+          userPlaylistSongs.splice(index, 1);
+          localStorage.setItem("userPlaylist", JSON.stringify(userPlaylistSongs));
+          updateUserPlaylist();
+        };
+        li.appendChild(removeBtn);
+        userPlaylist.appendChild(li);
+      });
+    }
+    
+    addPlaylistButtons.forEach(button => {
+      button.addEventListener("click", function () {
+        const songName = button.parentElement.textContent.replace("➕ Add", "").trim();
+        if (!userPlaylistSongs.includes(songName)) {
+          userPlaylistSongs.push(songName);
+          localStorage.setItem("userPlaylist", JSON.stringify(userPlaylistSongs));
+          updateUserPlaylist();
+        }
+      });
+    });
+    
+    // Playlist selector & creation
+    const playlistSelector = document.getElementById("playlist-selector");
+    const playlistNameInput = document.getElementById("playlist-name");
+    const createPlaylistButton = document.getElementById("create-playlist");
+    const currentPlaylistName = document.getElementById("current-playlist-name");
+    let playlists = JSON.parse(localStorage.getItem("playlists")) || {};
+    
+    function updatePlaylistUI() {
+      userPlaylist.innerHTML = "";
+      const currentPlaylist = playlistSelector.value;
+      currentPlaylistName.textContent = currentPlaylist || "None";
+      if (playlists[currentPlaylist]) {
+        playlists[currentPlaylist].forEach((song, index) => {
+          const li = document.createElement("li");
+          li.textContent = song;
+          const removeBtn = document.createElement("button");
+          removeBtn.textContent = "❌ Remove";
+          removeBtn.onclick = function () {
+            playlists[currentPlaylist].splice(index, 1);
+            localStorage.setItem("playlists", JSON.stringify(playlists));
+            updatePlaylistUI();
+          };
+          li.appendChild(removeBtn);
+          userPlaylist.appendChild(li);
+        });
+      }
+    }
+    
+    function updatePlaylistSelector() {
+      playlistSelector.innerHTML = "";
+      for (const name in playlists) {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        playlistSelector.appendChild(option);
+      }
+      updatePlaylistUI();
+    }
+    
+    createPlaylistButton.addEventListener("click", function () {
+      const name = playlistNameInput.value.trim();
+      if (name && !playlists[name]) {
+        playlists[name] = [];
+        localStorage.setItem("playlists", JSON.stringify(playlists));
+        playlistNameInput.value = "";
+        updatePlaylistSelector();
+        playlistSelector.value = name;
+        updatePlaylistUI();
+      }
+    });
+    
+    playlistSelector.addEventListener("change", updatePlaylistUI);
+    updatePlaylistSelector();
+  });
+  </script> 
+  <script>
+
+
+  function searchSongs() {
+    let input = document.getElementById("search-box").value.toLowerCase();
+    let songs = document.querySelectorAll(".playlist li");
+    songs.forEach(song => {
+      let songName = song.textContent.toLowerCase();
+      if (songName.includes(input)) {
+        song.style.display = "block";
+      } else {
+        song.style.display = "none";
+      }
+    });
+  }
+  </script>
+</body>
+</html>

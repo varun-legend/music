@@ -202,337 +202,23 @@
   <footer>
     <p>© 2025 Ultra Advanced Music Website. All Rights Reserved.</p>
   </footer>
-  <script>
-  const audioPlayer = document.getElementById('audio-player');
-  const playButton = document.getElementById('play');
-  const pauseButton = document.getElementById('pause');
-  const prevButton = document.getElementById('prev');
-  const nextButton = document.getElementById('next');
-  const progress = document.getElementById('progress');
-  const timeDisplay = document.getElementById('time-display');
-  const volumeSlider = document.getElementById('volume');
-
-  let currentSongIndex = 0;
-  // Array of song list items (used for next/prev navigation)
-  const songs = [...document.querySelectorAll('.playlist li')];
-
-  function playSong(index) {
-    // This function is now called from playMedia.
-    const selectedSong = songs[index];
-    audioPlayer.src = selectedSong.getAttribute('data-src');
-    audioPlayer.play();
-    updateNowPlaying(selectedSong.textContent);
-    songs.forEach(item => item.classList.remove('active'));
-    selectedSong.classList.add('active');
-    currentSongIndex = index;
-  }
-
-  function updateNowPlaying(text) {
-    document.querySelector('#music h2').textContent = `Now Playing: ${text}`;
-  }
-
-  playButton.addEventListener('click', () => {
-    if (!audioPlayer.src) playSong(currentSongIndex);
-    else audioPlayer.play();
-  });
-
-  pauseButton.addEventListener('click', () => {
-    audioPlayer.pause();
-  });
-
-  nextButton.addEventListener('click', () => {
-    currentSongIndex = (currentSongIndex + 1) % songs.length;
-    playSong(currentSongIndex);
-  });
-
-  prevButton.addEventListener('click', () => {
-    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-    playSong(currentSongIndex);
-  });
-
-  audioPlayer.addEventListener('timeupdate', () => {
-    const { duration, currentTime } = audioPlayer;
-    if (duration) {
-      const progressPercent = (currentTime / duration) * 100;
-      progress.style.width = progressPercent + '%';
-      const curMins = Math.floor(currentTime / 60);
-      const curSecs = String(Math.floor(currentTime % 60)).padStart(2, '0');
-      const durMins = Math.floor(duration / 60);
-      const durSecs = String(Math.floor(duration % 60)).padStart(2, '0');
-      timeDisplay.textContent = `${curMins}:${curSecs} / ${durMins}:${durSecs}`;
-    }
-  });
-
-  document.getElementById('progress-container').addEventListener('click', (e) => {
-    const width = e.currentTarget.clientWidth;
-    const clickX = e.offsetX;
-    const duration = audioPlayer.duration;
-    if (duration) {
-      audioPlayer.currentTime = (clickX / width) * duration;
-    }
-  });
-
-  volumeSlider.addEventListener('input', () => {
-    audioPlayer.volume = volumeSlider.value;
-  });
-
-  audioPlayer.addEventListener('ended', () => {
-    nextButton.click();
-  });
-  </script> 
-  <script>
-
-
-  // Audio Visualizer using Web Audio API
-  const canvas = document.getElementById('visualizer');
-  const canvasCtx = canvas.getContext('2d');
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  const analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 256;
-  const bufferLength = analyser.frequencyBinCount;
-  const dataArray = new Uint8Array(bufferLength);
-
-  const source = audioCtx.createMediaElementSource(audioPlayer);
-  source.connect(analyser);
-  analyser.connect(audioCtx.destination);
-
-  function drawVisualizer() {
-    requestAnimationFrame(drawVisualizer);
-    // Resize canvas on each frame in case of window change
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
-    analyser.getByteFrequencyData(dataArray);
-    canvasCtx.fillStyle = '#000';
-    canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-    const barWidth = (canvas.width / bufferLength) * 2.5;
-    let x = 0;
-    for (let i = 0; i < bufferLength; i++) {
-      const barHeight = dataArray[i];
-      const red = barHeight + (25 * (i / bufferLength));
-      const green = 250 * (i / bufferLength);
-      const blue = 50;
-      canvasCtx.fillStyle = `rgb(${red},${green},${blue})`;
-      canvasCtx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
-      x += barWidth + 1;
-    }
-  }
-
-  drawVisualizer();
-
-  // Resume Audio Context on user interaction
-  document.body.addEventListener('click', () => {
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-  });
-
-  // Drag and Drop Playlist Reordering
-  let dragSrcEl = null;
-
-  function dragStart(e) {
-    dragSrcEl = this;
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', this.innerHTML);
-    this.classList.add('dragging');
-  }
-
-  function dragOver(e) {
-    e.preventDefault();
-    return false;
-  }
-
-  function dropItem(e) {
-    e.stopPropagation();
-    if (dragSrcEl !== this) {
-      // Swap innerHTML
-      const temp = this.innerHTML;
-      this.innerHTML = dragSrcEl.innerHTML;
-      dragSrcEl.innerHTML = temp;
-      // Swap data-src attributes
-      const tempSrc = this.getAttribute('data-src');
-      this.setAttribute('data-src', dragSrcEl.getAttribute('data-src'));
-      dragSrcEl.setAttribute('data-src', tempSrc);
-    }
-    return false;
-  }
-
-  function dragEnd(e) {
-    this.classList.remove('dragging');
-  }
-
-  // Use a different variable name to avoid conflict with the 'songs' array
-  const dragItems = document.querySelectorAll('.playlist li');
-  dragItems.forEach((item) => {
-    item.draggable = true;
-    item.addEventListener('dragstart', dragStart);
-    item.addEventListener('dragover', dragOver);
-    item.addEventListener('drop', dropItem);
-    item.addEventListener('dragend', dragEnd);
-  });
-  </script> 
-  <script>
-
-
-  // Video Player for handling media (audio and video)
-  const videoPlayer = document.createElement("video");
-  videoPlayer.controls = true;
-  videoPlayer.style.width = "100%";
-
-  function playMedia(index) {
-    const selectedItem = document.querySelectorAll('.playlist li')[index];
-    const mediaType = selectedItem.getAttribute('data-type');
-    const mediaSrc = selectedItem.getAttribute('data-src');
-    currentSongIndex = index; // update current song index for next/prev buttons
-    if (mediaType === "audio") {
-      if (document.contains(videoPlayer)) videoPlayer.remove();
-      audioPlayer.src = mediaSrc;
-      audioPlayer.style.display = "block"; 
-      audioPlayer.play();
-    } else if (mediaType === "video") {
-      audioPlayer.pause();
-      audioPlayer.style.display = "none";
-      videoPlayer.src = mediaSrc;
-      document.querySelector('.music-player').appendChild(videoPlayer);
-      videoPlayer.play();
-    }
-  }
-
-  // Attach click event once using playMedia (removes duplicate listener)
-  document.querySelectorAll('.playlist li').forEach((item, index) => {
-    item.addEventListener("click", () => playMedia(index));
-  });
-
-  // Loop button control
-  const loopButton = document.getElementById('loop');
-  let isLooping = false;
-  loopButton.addEventListener('click', function () {
-    isLooping = !isLooping;
-    audioPlayer.loop = isLooping;
-    loopButton.textContent = isLooping ? "🔁 Loop On" : "🔁 Loop Off";
-  });
-
-  // Playlist Manager (User Playlist & Local Storage)
-  document.addEventListener("DOMContentLoaded", function () {
-    const addPlaylistButtons = document.querySelectorAll(".add-playlist");
-    const userPlaylist = document.getElementById("user-playlist");
-    let userPlaylistSongs = JSON.parse(localStorage.getItem("userPlaylist")) || [];
-    
-    function updateUserPlaylist() {
-      userPlaylist.innerHTML = "";
-      userPlaylistSongs.forEach((song, index) => {
-        const li = document.createElement("li");
-        li.textContent = song;
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "❌ Remove";
-        removeBtn.onclick = function () {
-          userPlaylistSongs.splice(index, 1);
-          localStorage.setItem("userPlaylist", JSON.stringify(userPlaylistSongs));
-          updateUserPlaylist();
-        };
-        li.appendChild(removeBtn);
-        userPlaylist.appendChild(li);
-      });
-    }
-    
-    addPlaylistButtons.forEach(button => {
-      button.addEventListener("click", function () {
-        const songName = button.parentElement.textContent.replace("➕ Add", "").trim();
-        if (!userPlaylistSongs.includes(songName)) {
-          userPlaylistSongs.push(songName);
-          localStorage.setItem("userPlaylist", JSON.stringify(userPlaylistSongs));
-          updateUserPlaylist();
-        }
-      });
-    });
-    
-    // Playlist selector & creation
-    const playlistSelector = document.getElementById("playlist-selector");
-    const playlistNameInput = document.getElementById("playlist-name");
-    const createPlaylistButton = document.getElementById("create-playlist");
-    const currentPlaylistName = document.getElementById("current-playlist-name");
-    let playlists = JSON.parse(localStorage.getItem("playlists")) || {};
-    
-    function updatePlaylistUI() {
-      userPlaylist.innerHTML = "";
-      const currentPlaylist = playlistSelector.value;
-      currentPlaylistName.textContent = currentPlaylist || "None";
-      if (playlists[currentPlaylist]) {
-        playlists[currentPlaylist].forEach((song, index) => {
-          const li = document.createElement("li");
-          li.textContent = song;
-          const removeBtn = document.createElement("button");
-          removeBtn.textContent = "❌ Remove";
-          removeBtn.onclick = function () {
-            playlists[currentPlaylist].splice(index, 1);
-            localStorage.setItem("playlists", JSON.stringify(playlists));
-            updatePlaylistUI();
-          };
-          li.appendChild(removeBtn);
-          userPlaylist.appendChild(li);
-        });
-      }
-    }
-    
-    function updatePlaylistSelector() {
-      playlistSelector.innerHTML = "";
-      for (const name in playlists) {
-        const option = document.createElement("option");
-        option.value = name;
-        option.textContent = name;
-        playlistSelector.appendChild(option);
-      }
-      updatePlaylistUI();
-    }
-    
-    createPlaylistButton.addEventListener("click", function () {
-      const name = playlistNameInput.value.trim();
-      if (name && !playlists[name]) {
-        playlists[name] = [];
-        localStorage.setItem("playlists", JSON.stringify(playlists));
-        playlistNameInput.value = "";
-        updatePlaylistSelector();
-        playlistSelector.value = name;
-        updatePlaylistUI();
-      }
-    });
-    
-    playlistSelector.addEventListener("change", updatePlaylistUI);
-    updatePlaylistSelector();
-  });
-  </script> 
-  <script>
-
-
-  function searchSongs() {
-    let input = document.getElementById("search-box").value.toLowerCase();
-    let songs = document.querySelectorAll(".playlist li");
-    songs.forEach(song => {
-      let songName = song.textContent.toLowerCase();
-      if (songName.includes(input)) {
-        song.style.display = "block";
-      } else {
-        song.style.display = "none";
-      }
-    });
-  }
-  </script>
-</body>
-</html>
 <script>
   let db;
   const request = indexedDB.open("MusicPlaylists", 1);
 
-  request.onupgradeneeded = function(event) {
+  request.onupgradeneeded = function (event) {
     db = event.target.result;
     if (!db.objectStoreNames.contains("playlists")) {
       db.createObjectStore("playlists", { keyPath: "name" });
     }
   };
 
-  request.onsuccess = function(event) {
+  request.onsuccess = function (event) {
     db = event.target.result;
     loadPlaylists();
   };
 
-  request.onerror = function(event) {
+  request.onerror = function (event) {
     console.error("IndexedDB error:", event.target.error);
   };
 
@@ -547,10 +233,10 @@
     const store = transaction.objectStore("playlists");
     const request = store.getAll();
 
-    request.onsuccess = function(event) {
+    request.onsuccess = function (event) {
       const playlists = event.target.result;
       playlistSelector.innerHTML = "";
-      playlists.forEach(playlist => {
+      playlists.forEach((playlist) => {
         const option = document.createElement("option");
         option.value = playlist.name;
         option.textContent = playlist.name;
@@ -560,8 +246,49 @@
     };
   }
 
+  function updatePlaylistUI() {
+    userPlaylist.innerHTML = "";
+    const currentPlaylist = playlistSelector.value;
+    currentPlaylistName.textContent = currentPlaylist || "None";
+
+    if (!currentPlaylist) return;
+
+    const transaction = db.transaction(["playlists"], "readonly");
+    const store = transaction.objectStore("playlists");
+    const request = store.get(currentPlaylist);
+
+    request.onsuccess = function (event) {
+      const playlist = event.target.result;
+      if (playlist && playlist.songs.length > 0) {
+        playlist.songs.forEach((song, index) => {
+          const li = document.createElement("li");
+          li.textContent = song.name;
+          li.setAttribute("data-src", song.src);
+          li.draggable = true;
+          li.classList.add("draggable");
+
+          // Remove Button
+          const removeBtn = document.createElement("button");
+          removeBtn.textContent = "❌";
+          removeBtn.onclick = function () {
+            playlist.songs.splice(index, 1);
+            savePlaylist(currentPlaylist, playlist.songs);
+            updatePlaylistUI();
+          };
+
+          li.appendChild(removeBtn);
+          userPlaylist.appendChild(li);
+        });
+
+        enableDragAndDrop();
+      }
+    };
+  }
+
   function renamePlaylist() {
     const oldName = playlistSelector.value;
+    if (!oldName) return alert("Select a playlist to rename.");
+
     const newName = prompt("Enter new playlist name:", oldName);
     if (!newName || newName === oldName) return;
 
@@ -569,16 +296,117 @@
     const store = transaction.objectStore("playlists");
     const getRequest = store.get(oldName);
 
-    getRequest.onsuccess = function(event) {
+    getRequest.onsuccess = function (event) {
       const playlist = event.target.result;
       if (playlist) {
-        store.delete(oldName);
-        playlist.name = newName;
-        store.put(playlist);
-        loadPlaylists();
+        store.delete(oldName);  // ✅ Corrected: Delete only after successfully saving the new one
+        const newTransaction = db.transaction(["playlists"], "readwrite");
+        const newStore = newTransaction.objectStore("playlists");
+        newStore.put({ name: newName, songs: playlist.songs });
+
+        newTransaction.oncomplete = function () {
+          loadPlaylists();
+          alert("Playlist renamed successfully!");
+        };
       }
     };
   }
 
-  renamePlaylistButton.addEventListener("click", renamePlaylist);
+  document.getElementById("rename-playlist").addEventListener("click", renamePlaylist);
+
+  function enableDragAndDrop() {
+    const items = document.querySelectorAll(".user-playlist li");
+    items.forEach((item) => {
+      item.addEventListener("dragstart", dragStart);
+      item.addEventListener("dragover", dragOver);
+      item.addEventListener("drop", dropItem);
+      item.addEventListener("dragend", dragEnd);
+    });
+  }
+
+  let draggedItem = null;
+
+  function dragStart(e) {
+    draggedItem = this;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text", this.innerHTML);
+    this.classList.add("dragging");
+  }
+
+  function dragOver(e) {
+    e.preventDefault();
+  }
+
+  function dropItem(e) {
+    e.preventDefault();
+    if (draggedItem !== this) {
+      let tempSrc = this.getAttribute("data-src");
+      let tempText = this.textContent;
+
+      this.setAttribute("data-src", draggedItem.getAttribute("data-src"));
+      this.textContent = draggedItem.textContent;
+      draggedItem.setAttribute("data-src", tempSrc);
+      draggedItem.textContent = tempText;
+    }
+  }
+
+  function dragEnd() {
+    this.classList.remove("dragging");
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const addPlaylistButtons = document.querySelectorAll(".add-to-playlist");
+
+    addPlaylistButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const songElement = button.parentElement;
+        const songName = songElement.textContent.replace("➕", "").trim();
+        const songSrc = songElement.getAttribute("data-src");
+
+        const currentPlaylist = playlistSelector.value;
+        if (!currentPlaylist) {
+          alert("Please select a playlist first!");
+          return;
+        }
+
+        const transaction = db.transaction(["playlists"], "readwrite");
+        const store = transaction.objectStore("playlists");
+        const getRequest = store.get(currentPlaylist);
+
+        getRequest.onsuccess = function (event) {
+          let playlist = event.target.result;
+          if (!playlist) {
+            playlist = { name: currentPlaylist, songs: [] };
+          }
+
+          if (!playlist.songs.some((song) => song.src === songSrc)) {
+            playlist.songs.push({ name: songName, src: songSrc });
+            store.put(playlist);
+            updatePlaylistUI();
+          }
+        };
+      });
+    });
+  });
+
+  document.getElementById("create-playlist").addEventListener("click", function () {
+    const name = playlistNameInput.value.trim();
+    if (!name) return alert("Enter a playlist name!");
+
+    const transaction = db.transaction(["playlists"], "readwrite");
+    const store = transaction.objectStore("playlists");
+    const getRequest = store.get(name);
+
+    getRequest.onsuccess = function (event) {
+      if (!event.target.result) {
+        store.put({ name, songs: [] });
+        playlistNameInput.value = "";
+        loadPlaylists();
+      } else {
+        alert("Playlist name already exists!");
+      }
+    };
+  });
+
+  playlistSelector.addEventListener("change", updatePlaylistUI);
 </script>

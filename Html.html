@@ -164,13 +164,19 @@
         <label for="volume">Volume:</label>
         <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
       </div>
-<!-- 🎵 Playlist Manager -->
+      <!-- 🎵 Playlist Manager -->
       <div class="playlist-container">
         <h3>Create & Manage Playlists</h3>
         <input type="text" id="playlist-name" placeholder="Enter Playlist Name">
         <button id="create-playlist">➕ Create Playlist</button>
         <select id="playlist-selector"></select>
       </div>
+      
+      <!-- Search Box for Filtering Songs -->
+      <div class="search-container" style="text-align:center; margin-top:1rem;">
+        <input type="text" id="search-box" oninput="searchSongs()" placeholder="Search Songs..." style="padding: 0.5rem; border-radius: var(--border-radius); border: 1px solid #ccc;">
+      </div>
+
       <!-- 🎶 Available Songs -->
       <h3>Available Songs</h3>
       <ul class="playlist" id="playlist">
@@ -183,6 +189,13 @@
           <button class="add-playlist">➕ Add</button>
         </li>
       </ul>
+
+      <!-- 🎵 User Playlist -->
+      <h3>Current Playlist: <span id="current-playlist-name">None</span></h3>
+      <ul class="user-playlist" id="user-playlist"></ul>
+    </div>
+  </section>
+
       <!-- 🎵 User Playlist -->
       <h3>Current Playlist: <span id="current-playlist-name">None</span></h3>
       <ul class="user-playlist" id="user-playlist"></ul>
@@ -485,4 +498,18 @@
     playlistSelector.addEventListener("change", updatePlaylistUI);
     updatePlaylistSelector();
   });
+</script>
+<script>
+  function searchSongs() {
+    let input = document.getElementById("search-box").value.toLowerCase();
+    let songs = document.querySelectorAll(".playlist li");
+    songs.forEach(song => {
+      let songName = song.textContent.toLowerCase();
+      if (songName.includes(input)) {
+        song.style.display = "block";
+      } else {
+        song.style.display = "none";
+      }
+    });
+  }
 </script>

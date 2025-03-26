@@ -561,3 +561,31 @@
     loopButton.textContent = isLooping ? "🔁 Loop On" : "🔁 Loop Off";
   });
 </script>
+<script>
+  const videoPlayer = document.createElement("video"); // Create a video element
+  videoPlayer.controls = true;
+  videoPlayer.style.width = "100%";
+
+  function playMedia(index) {
+    const selectedItem = document.querySelectorAll('.playlist li')[index];
+    const mediaType = selectedItem.getAttribute('data-type');
+    const mediaSrc = selectedItem.getAttribute('data-src');
+
+    if (mediaType === "audio") {
+      videoPlayer.remove();  // Remove video player
+      audioPlayer.src = mediaSrc;
+      audioPlayer.style.display = "block"; 
+      audioPlayer.play();
+    } else if (mediaType === "video") {
+      audioPlayer.pause();
+      audioPlayer.style.display = "none"; // Hide audio UI
+      videoPlayer.src = mediaSrc;
+      document.querySelector('.music-player').appendChild(videoPlayer);
+      videoPlayer.play();
+    }
+  }
+
+  document.querySelectorAll('.playlist li').forEach((item, index) => {
+    item.addEventListener("click", () => playMedia(index));
+  });
+</script>

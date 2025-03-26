@@ -138,39 +138,67 @@
     </div>
   </section>
   <section id="music">
-    <h2>Music Player</h2>
-    <div class="music-player">
-      <canvas id="visualizer"></canvas><audio id="audio-player"><source src="https://varun1210163.github.io/music/song1.mp3" type="audio/mpeg"> Your browser does not support audio.</audio>
-      <div class="controls">
-        <button id="prev">⏮️</button> <button id="play">▶️</button> <button id="pause">⏸️</button> <button id="next">⏭️</button> <button id="loop">🔁 Loop Off</button>
-      </div>
-      <div class="progress-container" id="progress-container">
-        <div class="progress" id="progress"></div>
-      </div>
-      <div id="time-display">
-        0:00 / 0:00
-      </div>
-      <div class="volume-container">
-        <label for="volume">Volume:</label> <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
-      </div>
-      <div class="playlist-container">
-        <h3>Create & Manage Playlists</h3><input type="text" id="playlist-name" placeholder="Enter Playlist Name"> <button id="create-playlist">➕ Create Playlist</button> <select id="playlist-selector">
-        </select>
-      </div>
-      <div class="search-container" style="text-align:center; margin-top:1rem;">
-        <input type="text" id="search-box" oninput="searchSongs()" placeholder="Search Songs..." style="padding: 0.5rem; border-radius: var(--border-radius); border: 1px solid #ccc;">
-      </div>
-      <h3>Available Songs</h3>
-      <ul class="playlist" id="playlist">
-        <li data-src="https://varun1210163.github.io/music/song1.mp3" data-type="audio">Refreshing music of Doraemon <button class="add-playlist">➕ Add</button></li>
-        <li data-src="https://varun1210163.github.io/music/song2.mp3" data-type="audio">Doraemon Explorer Bow Bow BGM <button class="add-playlist">➕ Add</button></li>
-      </ul>
-      <h3>Current Playlist: <span id="current-playlist-name">None</span></h3>
-      <ul class="user-playlist" id="user-playlist"></ul>
+  <h2>Music Player</h2>
+  <div class="music-player">
+    <canvas id="visualizer"></canvas>
+    
+    <audio id="audio-player">
+      <source src="https://varun1210163.github.io/music/song1.mp3" type="audio/mpeg">
+      Your browser does not support audio.
+    </audio>
+
+    <div class="controls">
+      <button id="prev">⏮️</button>
+      <button id="play">▶️</button>
+      <button id="pause">⏸️</button>
+      <button id="next">⏭️</button>
+      <button id="loop">🔁 Loop Off</button>
     </div>
-  </section>
+
+    <div class="progress-container" id="progress-container">
+      <div class="progress" id="progress"></div>
+    </div>
+    <div id="time-display">0:00 / 0:00</div>
+
+    <div class="volume-container">
+      <label for="volume">Volume:</label>
+      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+    </div>
+  </div> <!-- 🎵 End of .music-player -->
+
+  <!-- 🎵 Playlist Manager -->
+  <div class="playlist-container">
+    <h3>Create & Manage Playlists</h3>
+    <input type="text" id="playlist-name" placeholder="Enter Playlist Name">
+    <button id="create-playlist">➕ Create Playlist</button>
+    <select id="playlist-selector"></select>
+    <button id="rename-playlist">✏️ Rename</button>
+  </div>
+
+  <!-- Search Box for Filtering Songs -->
+  <div class="search-container" style="text-align:center; margin-top:1rem;">
+    <input type="text" id="search-box" oninput="searchSongs()" placeholder="Search Songs..."
+      style="padding: 0.5rem; border-radius: var(--border-radius); border: 1px solid #ccc;">
+  </div>
+
+  <!-- 🎶 Available Songs -->
+  <h3>Available Songs</h3>
+  <ul class="playlist" id="available-songs">
+    <li data-src="https://varun1210163.github.io/music/song1.mp3" data-type="audio">
+      Refreshing music of Doraemon 
+      <button class="add-to-playlist">➕</button>
+    </li>
+    <li data-src="https://varun1210163.github.io/music/song2.mp3" data-type="audio">
+      Doraemon Explorer Bow Bow BGM 
+      <button class="add-to-playlist">➕</button>
+    </li>
+  </ul>
+
+  <!-- 🎵 User Playlist (Supports Multiple Playlists) -->
   <h3>Current Playlist: <span id="current-playlist-name">None</span></h3>
   <ul class="user-playlist" id="user-playlist"></ul>
+
+</section> <!-- 🔚 End of Music Section -->
   <footer>
     <p>© 2025 Ultra Advanced Music Website. All Rights Reserved.</p>
   </footer>

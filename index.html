@@ -207,17 +207,31 @@
         <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
       </div>
 
-      <!-- Playlist -->
-      <h3>Playlist</h3>
-      <input type="text" id="search-box" placeholder="Search for a song..." onkeyup="searchSongs()">
+      <!-- 🎵 Playlist Manager -->
+<div class="playlist-container">
+  <h3>Create & Manage Playlists</h3>
+  <input type="text" id="playlist-name" placeholder="Enter Playlist Name">
+  <button id="create-playlist">➕ Create Playlist</button>
+  <select id="playlist-selector"></select>
+</div>
+
+<!-- 🎶 Available Songs -->
+<h3>Available Songs</h3>
 <ul class="playlist" id="playlist">
-  <li data-src="https://varun1210163.github.io/music/song1.mp3" data-type="audio">Refreshing music of Doraemon</li>
-  <li data-src="https://varun1210163.github.io/music/song2.mp3" data-type="audio">Doraemon explorer bow bow bgm</li>
-  <li data-src="https://varun1210163.github.io/music/video1.mp4" data-type="video">Doraemon Special Video</li>
+  <li data-src="https://varun1210163.github.io/music/song1.mp3" data-type="audio">
+    Refreshing music of Doraemon 
+    <button class="add-playlist">➕ Add</button>
+  </li>
+  <li data-src="https://varun1210163.github.io/music/song2.mp3" data-type="audio">
+    Doraemon Explorer Bow Bow BGM 
+    <button class="add-playlist">➕ Add</button>
+  </li>
 </ul>
-    </div>
-  </section>
-<style>
+
+<!-- 🎵 User Playlist -->
+<h3>Current Playlist: <span id="current-playlist-name">None</span></h3>
+<ul class="user-playlist" id="user-playlist"></ul>
+  
     /* Music Player Styling */
     .music-player {
       background: var(--bg-darker);

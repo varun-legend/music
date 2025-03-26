@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultra Advanced Music Website</title>
+  <meta name="description" content="A futuristic, ultra-advanced music website with vibrant colors, animations, and an advanced music player.">
+  <meta name="author" content="Varun Prasath">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#music">Music</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home" class="hero">
+    <h2>Welcome to the Future of Music</h2>
+    <p>Experience vibrant colors, dynamic animations, and an ultra-advanced music player.</p>
+
+    <!-- Rotating Cube -->
+    <div id="cube-container">
+      <div class="cube">
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face right"></div>
+        <div class="face left"></div>
+        <div class="face top"></div>
+        <div class="face bottom"></div>
+      </div>
+    </div>
+  </section>
+<section id="about">
+    <h2>About</h2>
+    <p>This website is created by Varun Prasath, a 15-year-old visionary, blending art and technology to bring you an immersive music experience.</p>
+  </section>
+
+  <section id="music">
+    <h2>Music Player</h2>
+    <div class="music-player">
+      <canvas id="visualizer"></canvas>
+      <audio id="audio-player">
+        <source src="https://varun1210163.github.io/music/song1.mp3" type="audio/mpeg">
+        Your browser does not support audio.
+      </audio>
+
+      <div class="controls">
+        <button id="prev">⏮️</button>
+        <button id="play">▶️</button>
+        <button id="pause">⏸️</button>
+        <button id="next">⏭️</button>
+        <button id="loop">🔁 Loop Off</button>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress" id="progress"></div>
+      </div>
+      <div id="time-display">0:00 / 0:00</div>
+
+      <div class="volume-container">
+        <label for="volume">Volume:</label>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+      </div>

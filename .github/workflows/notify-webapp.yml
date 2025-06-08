@@ -1,0 +1,17 @@
+name: Notify Web App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fire repository_dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          # Change this to your hosting repo name:
+          repository: varun-legend/music-player-hosting
+          token: ${{ secrets.WEBAPP_PAT }}
+          event-type: music-updated

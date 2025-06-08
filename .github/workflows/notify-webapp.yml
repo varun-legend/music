@@ -11,7 +11,7 @@ jobs:
       - name: Fire repository_dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
-          # Change this to your hosting repo name:
-          repository: varun-legend/music-player-hosting
+          # MUST match your hosting repo name exactly:
+          repository: varun-legend/firebase
           token: ${{ secrets.WEBAPP_PAT }}
           event-type: music-updated
